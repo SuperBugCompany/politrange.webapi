@@ -22,5 +22,15 @@ namespace SuperBug.Politrange.Services.Sites
         {
             return siteRepository.GetSiteById(id);
         }
+
+        public Site AddSite(Site site)
+        {
+            return siteRepository.AddSite(site);
+        }
+
+        public bool Delete(int id)
+        {
+            return siteRepository.DeleteSite(id);
+        }
     }
 }

@@ -7,5 +7,7 @@ namespace SuperBug.Politrange.Services.Sites
     {
         IEnumerable<Site> GetAll();
         Site GetSitebyId(int id);
+        Site AddSite(Site site);
+        bool Delete(int id);
     }
 }
