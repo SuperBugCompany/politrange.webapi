@@ -138,8 +138,8 @@
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\SitesController.cs" />
-    <Compile Include="Controllers\StatsController.cs">
+    <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Controllers\StatController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mappers\AutoMapperConfig.cs" />
