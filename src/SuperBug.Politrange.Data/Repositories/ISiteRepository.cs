@@ -7,5 +7,7 @@ namespace SuperBug.Politrange.Data.Repositories
     {
         IEnumerable<Site> GetAllSite();
         Site GetSiteById(int id);
+        Site AddSite(Site site);
+        bool DeleteSite(int id);
     }
 }
