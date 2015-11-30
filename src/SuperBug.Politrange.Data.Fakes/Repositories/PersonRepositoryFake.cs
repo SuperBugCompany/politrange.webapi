@@ -34,16 +34,16 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
 
         public bool DeletePerson(int id)
         {
-            bool isDelete = false;
+            bool isDeleted = false;
 
-            Person person = persons.Find(x => x.PersonId == id);
+            var person = GetPersonById(id);
             if (person != null)
             {
                 persons.Remove(person);
-                isDelete = true;
+                isDeleted = true;
             }
 
-            return isDelete;
+            return isDeleted;
         }
 
         private void PopulatePersons()
@@ -54,11 +54,6 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
                 {
                     PersonId = 1,
                     Name = "Медведев",
-                },
-                new Person()
-                {
-                    PersonId = 2,
-                    Name = "Навальный"
                 },
                 new Person()
                 {
