@@ -28,7 +28,8 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
         {
             bool isDelete = false;
 
-            Site site = sites.Find(x => x.SiteId == id);
+            var site = GetSiteById(id);
+
             if (site != null)
             {
                 sites.Remove(site);
