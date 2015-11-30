@@ -19,6 +19,11 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return keywords;
         }
 
+        public IEnumerable<Keyword> GetKeywordsByPersonId(int id)
+        {
+            return keywords.Where(x => x.Person.PersonId == id);
+        } 
+
         public Keyword GetKeywordById(int id)
         {
             return keywords.Find(x => x.KeywordId == id);
