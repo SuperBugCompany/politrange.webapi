@@ -46,6 +46,7 @@
     <Compile Include="DataFakeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\KeywordRepositoryFake.cs" />
+    <Compile Include="Repositories\PageRepositoryFake.cs" />
     <Compile Include="Repositories\PersonRepositoryFake.cs" />
     <Compile Include="Repositories\SiteRepositoryFake.cs" />
   </ItemGroup>
