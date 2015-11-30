@@ -8,6 +8,6 @@ namespace SuperBug.Politrange.Data.Repositories
         IEnumerable<Person> GetPersons();
         Person GetPersonById(int id);
         Person AddPerson(Person person);
-        void DeletePerson(Person person);
+        bool DeletePerson(int id);
     }
 }
