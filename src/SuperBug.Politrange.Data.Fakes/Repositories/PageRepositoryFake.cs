@@ -20,6 +20,11 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return pages;
         }
 
+        public IEnumerable<Page> GetMany(Func<Page, bool> @where)
+        {
+            return pages.Where(where);
+        }
+
         public IEnumerable<Page> GetPagesBySiteId(int id)
         {
             return pages.Where(x => x.Site.SiteId == id);
