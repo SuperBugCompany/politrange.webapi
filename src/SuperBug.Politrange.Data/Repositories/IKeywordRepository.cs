@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using SuperBug.Politrange.Data.Infrastructure;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Repositories
 {
-    public interface IKeywordRepository
+    public interface IKeywordRepository: IRepository<Keyword>
     {
-        IEnumerable<Keyword> GetKeywords();
-        Keyword GetKeywordById(int id);
-        Keyword AddKeyword(Keyword keyword);
-        bool DeleteKeyword(int id);
         IEnumerable<Keyword> GetMany(Func<Keyword,bool> where);
     }
 }

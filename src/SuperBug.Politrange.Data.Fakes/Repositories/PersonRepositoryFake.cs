@@ -11,20 +11,20 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
 
         public PersonRepositoryFake()
         {
-            PopulatePersons();
+            Populate();
         }
 
-        public IEnumerable<Person> GetPersons()
+        public IEnumerable<Person> GetAll()
         {
             return persons;
         }
 
-        public Person GetPersonById(int id)
+        public Person GetById(int id)
         {
             return persons.Find(x => x.PersonId == id);
         }
 
-        public Person AddPerson(Person person)
+        public Person Add(Person person)
         {
             person.PersonId = persons.Max(x => x.PersonId) + 1;
             persons.Add(person);
@@ -32,11 +32,11 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return person;
         }
 
-        public bool DeletePerson(int id)
+        public bool Delete(int id)
         {
             bool isDeleted = false;
 
-            var person = GetPersonById(id);
+            var person = GetById(id);
             if (person != null)
             {
                 persons.Remove(person);
@@ -46,7 +46,7 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return isDeleted;
         }
 
-        private void PopulatePersons()
+        private void Populate()
         {
             persons = new List<Person>()
             {

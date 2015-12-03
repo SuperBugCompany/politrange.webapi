@@ -15,17 +15,17 @@ namespace SuperBug.Politrange.Services.Keywords
 
         public IEnumerable<Keyword> GetKeywords()
         {
-            return keywordRepository.GetKeywords();
+            return keywordRepository.GetAll();
         }
 
         public Keyword AddKeyword(Keyword keyword)
         {
-            return keywordRepository.AddKeyword(keyword);
+            return keywordRepository.Add(keyword);
         }
 
         public bool RemoveKeyword(int id)
         {
-            return keywordRepository.DeleteKeyword(id);
+            return keywordRepository.Delete(id);
         }
     }
 

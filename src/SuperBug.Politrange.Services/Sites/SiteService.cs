@@ -17,22 +17,22 @@ namespace SuperBug.Politrange.Services.Sites
 
         public IEnumerable<Site> GetAll()
         {
-            return siteRepository.GetAllSite();
+            return siteRepository.GetAll();
         }
 
         public Site GetSitebyId(int id)
         {
-            return siteRepository.GetSiteById(id);
+            return siteRepository.GetById(id);
         }
 
         public Site AddSite(Site site)
         {
-            return siteRepository.AddSite(site);
+            return siteRepository.Add(site);
         }
 
         public bool Delete(int id)
         {
-            return siteRepository.DeleteSite(id);
+            return siteRepository.Delete(id);
         }
 
         public IEnumerable<Page> GetPagesBySiteId(int siteId)

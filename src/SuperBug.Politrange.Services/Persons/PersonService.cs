@@ -26,22 +26,22 @@ namespace SuperBug.Politrange.Services.Persons
 
         public IEnumerable<Person> GetAll()
         {
-            return personRepository.GetPersons();
+            return personRepository.GetAll();
         }
 
         public Person GetPersonById(int id)
         {
-            return personRepository.GetPersonById(id);
+            return personRepository.GetById(id);
         }
 
         public Person AddPerson(Person person)
         {
-            return personRepository.AddPerson(person);
+            return personRepository.Add(person);
         }
 
         public bool RemovePerson(int id)
         {
-            return personRepository.DeletePerson(id);
+            return personRepository.Delete(id);
         }
 
         public IEnumerable<Keyword> GetKeywordsByPersonId(int personId)

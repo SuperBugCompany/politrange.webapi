@@ -12,25 +12,20 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
 
         public KeywordRepositoryFake()
         {
-            PopulateKeywords();
+            Populate();
         }
 
-        public IEnumerable<Keyword> GetKeywords()
+        public IEnumerable<Keyword> GetAll()
         {
             return keywords;
         }
 
-        public IEnumerable<Keyword> GetKeywordsByPersonId(int id)
-        {
-            return keywords.Where(x => x.Person.PersonId == id);
-        } 
-
-        public Keyword GetKeywordById(int id)
+        public Keyword GetById(int id)
         {
             return keywords.Find(x => x.KeywordId == id);
         }
 
-        public Keyword AddKeyword(Keyword keyword)
+        public Keyword Add(Keyword keyword)
         {
             keyword.KeywordId = keywords.Max(x => x.KeywordId) + 1;
             keywords.Add(keyword);
@@ -38,11 +33,11 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return keyword;
         }
 
-        public bool DeleteKeyword(int id)
+        public bool Delete(int id)
         {
             bool isDeleted = false;
 
-            var keyword = GetKeywordById(id);
+            var keyword = GetById(id);
 
             if (keyword != null)
             {
@@ -58,7 +53,7 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return keywords.Where(where);
         }
 
-        private void PopulateKeywords()
+        private void Populate()
         {
             var persons = new List<Person>()
             {

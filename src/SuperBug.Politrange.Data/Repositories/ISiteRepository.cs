@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
+using SuperBug.Politrange.Data.Infrastructure;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Repositories
 {
-    public interface ISiteRepository
+    public interface ISiteRepository:IRepository<Site>
     {
-        IEnumerable<Site> GetAllSite();
-        Site GetSiteById(int id);
-        Site AddSite(Site site);
-        bool DeleteSite(int id);
     }
 }
