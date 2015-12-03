@@ -10,6 +10,9 @@ namespace SuperBug.Politrange.Api.Mappers
 		{
 		    Mapper.CreateMap<PersonPageRank, CommonStatViewModel>();
 		    Mapper.CreateMap<Site, SiteViewModel>();
+		    Mapper.CreateMap<Person, PersonViewModel>();
+		    Mapper.CreateMap<Keyword, KeywordViewModel>();
+		    Mapper.CreateMap<Page, PageViewModel>();
 		}
 	}
 }

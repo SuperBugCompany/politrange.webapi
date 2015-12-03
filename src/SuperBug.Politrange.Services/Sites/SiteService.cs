@@ -4,13 +4,15 @@ using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Services.Sites
 {
-    public class SiteService : ISiteService
+    public class SiteService: ISiteService
     {
+        private readonly IPageRepository pageRepository;
         private readonly ISiteRepository siteRepository;
 
-        public SiteService(ISiteRepository siteRepository)
+        public SiteService(ISiteRepository siteRepository, IPageRepository pageRepository)
         {
             this.siteRepository = siteRepository;
+            this.pageRepository = pageRepository;
         }
 
         public IEnumerable<Site> GetAll()
@@ -31,6 +33,11 @@ namespace SuperBug.Politrange.Services.Sites
         public bool Delete(int id)
         {
             return siteRepository.DeleteSite(id);
+        }
+
+        public IEnumerable<Page> GetPagesBySiteId(int siteId)
+        {
+            return pageRepository.GetMany(x => x.Site.SiteId == siteId);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace SuperBug.Politrange.Services.Sites
         Site GetSitebyId(int id);
         Site AddSite(Site site);
         bool Delete(int id);
+        IEnumerable<Page> GetPagesBySiteId(int siteId);
     }
 }

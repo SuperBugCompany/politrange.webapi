@@ -4,6 +4,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using Owin;
 using SuperBug.Politrange.Data;
+using SuperBug.Politrange.Data.Fakes;
 using SuperBug.Politrange.Services;
 
 namespace SuperBug.Politrange.Api
@@ -30,8 +31,15 @@ namespace SuperBug.Politrange.Api
 
 		private static void RegisterComponents(ContainerBuilder builder)
 		{
-		    builder.RegisterModule<DataModule>();
-		    builder.RegisterModule<ServiceModule>();
+            //Todo: Переключать между фейковыми и настоящими данными путем раскоментированием и закоментированием, см ниже.
+
+            // Фейковые данные
+            builder.RegisterModule<DataFakeModule>();
+
+            // Настоящие данные
+		    //builder.RegisterModule<DataModule>();
+
+            builder.RegisterModule<ServiceModule>();
 
 		}
 	}

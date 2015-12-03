@@ -7,6 +7,7 @@ using SuperBug.Politrange.Services.Sites;
 
 namespace SuperBug.Politrange.Api.Controllers
 {
+    [RoutePrefix("api/sites")]
     public class SiteController: ApiController
     {
         private readonly ISiteService siteService;
@@ -53,6 +54,15 @@ namespace SuperBug.Politrange.Api.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [Route("{siteId:int}/pages")]
+        public IHttpActionResult GetPagesBySite(int siteId)
+        {
+            var pages = siteService.GetPagesBySiteId(siteId);
+            var pagesViewModel = Mapper.Map<IEnumerable<Page>, IEnumerable<PageViewModel>>(pages);
+
+            return Ok(pagesViewModel);
         }
     }
 }

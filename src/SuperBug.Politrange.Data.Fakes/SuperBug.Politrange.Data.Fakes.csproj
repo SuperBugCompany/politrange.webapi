@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F29778BC-723A-4549-BCE8-8EA05B241B9D}</ProjectGuid>
+    <ProjectGuid>{9B0FD7F4-043D-45D2-9134-0016B46E1190}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperBug.Politrange.Services</RootNamespace>
-    <AssemblyName>SuperBug.Politrange.Services</AssemblyName>
+    <RootNamespace>SuperBug.Politrange.Data.Fakes</RootNamespace>
+    <AssemblyName>SuperBug.Politrange.Data.Fakes</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,18 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Keywords\KeywordService.cs" />
-    <Compile Include="Pages\PageService.cs" />
-    <Compile Include="Persons\PersonService.cs" />
-    <Compile Include="ServiceModule.cs" />
+    <Compile Include="DataFakeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sites\ISiteService.cs" />
-    <Compile Include="Sites\SiteService.cs" />
-    <Compile Include="States\IStatService.cs" />
-    <Compile Include="States\StatService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Repositories\KeywordRepositoryFake.cs" />
+    <Compile Include="Repositories\PageRepositoryFake.cs" />
+    <Compile Include="Repositories\PersonRepositoryFake.cs" />
+    <Compile Include="Repositories\SiteRepositoryFake.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SuperBug.Politrange.Data\SuperBug.Politrange.Data.csproj">
@@ -65,7 +60,9 @@
       <Name>SuperBug.Politrange.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
