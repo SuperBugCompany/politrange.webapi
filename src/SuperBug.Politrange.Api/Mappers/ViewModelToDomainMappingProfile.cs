@@ -9,6 +9,8 @@ namespace SuperBug.Politrange.Api.Mappers
         protected override void Configure()
         {
             Mapper.CreateMap<SiteViewModel, Site>();
+            Mapper.CreateMap<PersonViewModel, Person>();
+
         }
     }
 }
