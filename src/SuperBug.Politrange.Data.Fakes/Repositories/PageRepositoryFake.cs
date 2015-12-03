@@ -12,30 +12,25 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
 
         public PageRepositoryFake()
         {
-            PopulatePages();
+            Populate();
         }
 
-        public IEnumerable<Page> GetPages()
+        public IEnumerable<Page> GetAll()
         {
             return pages;
         }
 
-        public IEnumerable<Page> GetMany(Func<Page, bool> @where)
+        public IEnumerable<Page> GetMany(Func<Page, bool> where)
         {
             return pages.Where(where);
         }
 
-        public IEnumerable<Page> GetPagesBySiteId(int id)
-        {
-            return pages.Where(x => x.Site.SiteId == id);
-        } 
-
-        public Page GetPageById(int id)
+        public Page GetById(int id)
         {
             return pages.Find(x => x.PageId == id);
         }
 
-        public Page AddPage(Page page)
+        public Page Add(Page page)
         {
             page.PageId = pages.Max(x => x.PageId) + 1;
             pages.Add(page);
@@ -43,11 +38,11 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return page;
         }
 
-        public bool DeletePage(int id)
+        public bool Delete(int id)
         {
             bool isDeleted = false;
 
-            var page = GetPageById(id);
+            var page = GetById(id);
 
             if (page != null)
             {
@@ -58,7 +53,7 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return isDeleted;
         }
 
-        private void PopulatePages()
+        private void Populate()
         {
             var sites = new List<Site>()
             {
