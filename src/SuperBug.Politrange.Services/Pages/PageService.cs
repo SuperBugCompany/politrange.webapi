@@ -15,17 +15,17 @@ namespace SuperBug.Politrange.Services.Pages
 
         public IEnumerable<Page> GetPages()
         {
-            return pageRepository.GetPages();
+            return pageRepository.GetAll();
         }
 
         public Page AddPage(Page page)
         { 
-            return pageRepository.AddPage(page);
+            return pageRepository.Add(page);
         }
 
         public bool RemovePage(int id)
         {
-            return pageRepository.DeletePage(id);
+            return pageRepository.Delete(id);
         }
     }
 
