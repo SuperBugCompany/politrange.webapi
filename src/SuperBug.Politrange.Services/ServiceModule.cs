@@ -16,7 +16,7 @@ namespace SuperBug.Politrange.Services
             builder.RegisterType<StatService>().As<IStatService>();
             builder.RegisterType<PersonService>().As<IPersonService>();
             builder.RegisterType<PageService>().As<IPageService>();
-            builder.RegisterType<KeyedService>().As<IKeywordService>();
+            builder.RegisterType<KeywordService>().As<IKeywordService>();
         }
     }
 }
