@@ -20,7 +20,7 @@ namespace SuperBug.Politrange.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public void DeletePerson(Person person)
+        public bool DeletePerson(int id)
         {
             throw new System.NotImplementedException();
         }
