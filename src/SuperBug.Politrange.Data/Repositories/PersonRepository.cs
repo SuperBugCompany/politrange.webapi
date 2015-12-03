@@ -5,22 +5,22 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     class PersonRepository: IPersonRepository
     {
-        public IEnumerable<Person> GetPersons()
+        public IEnumerable<Person> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Person GetPersonById(int id)
+        public Person GetById(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Person AddPerson(Person person)
+        public Person Add(Person entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool DeletePerson(int id)
+        public bool Delete(int id)
         {
             throw new System.NotImplementedException();
         }

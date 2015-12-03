@@ -14,17 +14,17 @@ namespace SuperBug.Politrange.Data.Repositories
             this.context = context;
         }
 
-        public IEnumerable<Site> GetAllSite()
+        public IEnumerable<Site> GetAll()
         {
             return context.Sites.ToList();
         }
 
-        public Site GetSiteById(int id)
+        public Site GetById(int id)
         {
             return context.Sites.FirstOrDefault(x => x.SiteId == id);
         }
 
-        public Site AddSite(Site site)
+        public Site Add(Site site)
         {
             site = context.Sites.Add(site);
             context.SaveChanges();
@@ -32,12 +32,10 @@ namespace SuperBug.Politrange.Data.Repositories
             return site;
         }
 
-        public bool DeleteSite(int id)
+        public bool Delete(int id)
         {
             bool isDeleted = false;
 
-            //            Site site = new Site(){SiteId = id};
-            //            site = context.Sites.Attach(site);
             Site site = context.Sites.Find(id);
             
             if (site != null)
