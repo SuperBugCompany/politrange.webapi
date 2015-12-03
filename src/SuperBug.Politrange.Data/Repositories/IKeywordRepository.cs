@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Repositories
@@ -8,6 +9,7 @@ namespace SuperBug.Politrange.Data.Repositories
         IEnumerable<Keyword> GetKeywords();
         Keyword GetKeywordById(int id);
         Keyword AddKeyword(Keyword keyword);
-        bool DeleteKeyword(int id); 
+        bool DeleteKeyword(int id);
+        IEnumerable<Keyword> GetMany(Func<Keyword,bool> where);
     }
 }
