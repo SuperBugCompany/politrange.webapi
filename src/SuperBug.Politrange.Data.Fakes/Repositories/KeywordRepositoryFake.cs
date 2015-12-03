@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SuperBug.Politrange.Data.Repositories;
 using SuperBug.Politrange.Models;
@@ -50,6 +51,11 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             }
 
             return isDeleted;
+        }
+
+        public IEnumerable<Keyword> GetMany(Func<Keyword, bool> @where)
+        {
+            return keywords.Where(where);
         }
 
         private void PopulateKeywords()
