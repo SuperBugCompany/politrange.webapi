@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keywords\KeywordService.cs" />
+    <Compile Include="Pages\PageService.cs" />
+    <Compile Include="Persons\PersonService.cs" />
     <Compile Include="ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sites\ISiteService.cs" />
