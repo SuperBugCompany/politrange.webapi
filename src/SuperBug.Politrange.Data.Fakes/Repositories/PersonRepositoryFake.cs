@@ -32,6 +32,21 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return person;
         }
 
+        public bool Update(Person entity)
+        {
+            bool isUpdated = false;
+
+            var person = GetById(entity.PersonId);
+
+            if (person != null)
+            {
+                person.Name = entity.Name;
+                isUpdated = true;
+            }
+
+            return isUpdated;
+        }
+
         public bool Delete(int id)
         {
             bool isDeleted = false;

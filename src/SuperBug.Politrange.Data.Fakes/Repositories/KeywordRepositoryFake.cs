@@ -53,6 +53,21 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return keywords.Where(where);
         }
 
+        public bool Update(Keyword entity)
+        {
+            bool isUpdated = false;
+
+            var keyword = GetById(entity.KeywordId);
+
+            if (keyword != null)
+            {
+                keyword.Name = entity.Name;
+                isUpdated = true;
+            }
+
+            return isUpdated;
+        }
+
         private void Populate()
         {
             var persons = new List<Person>()
