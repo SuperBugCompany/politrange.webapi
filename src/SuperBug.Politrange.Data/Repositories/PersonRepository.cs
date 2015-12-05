@@ -20,6 +20,11 @@ namespace SuperBug.Politrange.Data.Repositories
             throw new System.NotImplementedException();
         }
 
+        public bool Update(Person entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool Delete(int id)
         {
             throw new System.NotImplementedException();
