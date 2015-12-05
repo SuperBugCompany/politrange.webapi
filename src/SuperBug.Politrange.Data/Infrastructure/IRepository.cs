@@ -7,6 +7,7 @@ namespace SuperBug.Politrange.Data.Infrastructure
         IEnumerable<T> GetAll();
         T GetById(int id);
         T Add(T entity);
+        bool Update(T entity);
         bool Delete(int id);
     }
 }
