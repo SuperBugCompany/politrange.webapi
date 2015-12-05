@@ -30,6 +30,11 @@ namespace SuperBug.Politrange.Services.Sites
             return siteRepository.Add(site);
         }
 
+        public bool Update(Site site)
+        {
+            return siteRepository.Update(site);
+        }
+
         public bool Delete(int id)
         {
             return siteRepository.Delete(id);
