@@ -27,6 +27,11 @@ namespace SuperBug.Politrange.Services.Keywords
         {
             return keywordRepository.Delete(id);
         }
+
+        public bool Update(Keyword keyword)
+        {
+            return keywordRepository.Update(keyword);
+        }
     }
 
     public interface IKeywordService
@@ -34,5 +39,6 @@ namespace SuperBug.Politrange.Services.Keywords
         IEnumerable<Keyword> GetKeywords();
         Keyword AddKeyword(Keyword keyword);
         bool RemoveKeyword(int id);
+        bool Update(Keyword keyword);
     }
 }
