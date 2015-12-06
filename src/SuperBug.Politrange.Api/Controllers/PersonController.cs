@@ -6,6 +6,7 @@ using System.Web.Http.Results;
 using AutoMapper;
 using SuperBug.Politrange.Api.Models.ViewModels;
 using SuperBug.Politrange.Models;
+using SuperBug.Politrange.Services.Keywords;
 using SuperBug.Politrange.Services.Persons;
 
 namespace SuperBug.Politrange.Api.Controllers
@@ -14,10 +15,12 @@ namespace SuperBug.Politrange.Api.Controllers
     public class PersonController: ApiController
     {
         private readonly IPersonService personService;
+        private readonly IKeywordService keywordService;
 
-        public PersonController(IPersonService personService)
+        public PersonController(IPersonService personService,IKeywordService keywordService)
         {
             this.personService = personService;
+            this.keywordService = keywordService;
         }
 
         public IHttpActionResult Get()
@@ -43,7 +46,7 @@ namespace SuperBug.Politrange.Api.Controllers
             person = personService.AddPerson(person);
             Mapper.Map(person, personViewModel);
             return Ok(personViewModel);
-        }
+        } 
 
         public IHttpActionResult Delete(int id)
         {
@@ -62,6 +65,17 @@ namespace SuperBug.Politrange.Api.Controllers
             var keywords = personService.GetKeywordsByPersonId(personId);
             var keywordsViewModel = Mapper.Map<IEnumerable<Keyword>, IEnumerable<KeywordViewModel>>(keywords);
             return Ok(keywordsViewModel);
+        }
+
+        [Route("{personId:int}/keywords")]
+        public IHttpActionResult PostKeyword(int personId, KeywordViewModel keywordViewModel)
+        {
+            var keyword = Mapper.Map<KeywordViewModel, Keyword>(keywordViewModel);
+            keyword.PersonId = personId;
+            keyword = keywordService.AddKeyword(keyword);
+            Mapper.Map(keyword, keywordViewModel);
+
+            return Ok(keywordViewModel);      
         }
     }
 }

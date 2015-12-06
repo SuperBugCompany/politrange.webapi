@@ -9,6 +9,7 @@ namespace SuperBug.Politrange.Services.Persons
         IEnumerable<Person> GetAll();
         Person GetPersonById(int id);
         Person AddPerson(Person person);
+        bool UpdatePerson(Person person);
         bool RemovePerson(int id);
         IEnumerable<Keyword> GetKeywordsByPersonId(int personId);
     }
@@ -39,6 +40,11 @@ namespace SuperBug.Politrange.Services.Persons
             return personRepository.Add(person);
         }
 
+        public bool UpdatePerson(Person person)
+        {
+            return personRepository.Update(person);
+        }
+
         public bool RemovePerson(int id)
         {
             return personRepository.Delete(id);
@@ -46,7 +52,7 @@ namespace SuperBug.Politrange.Services.Persons
 
         public IEnumerable<Keyword> GetKeywordsByPersonId(int personId)
         {
-            return keywordRepository.GetMany(x => x.Person.PersonId == personId);
+            return keywordRepository.GetMany(x => x.PersonId == personId);
         }
     }
 }

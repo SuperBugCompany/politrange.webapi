@@ -34,8 +34,13 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
         {
             page.PageId = pages.Max(x => x.PageId) + 1;
             pages.Add(page);
-            
+
             return page;
+        }
+
+        public bool Update(Page entity)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Delete(int id)
@@ -66,7 +71,7 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
                 new Page()
                 {
                     PageId = 1,
-                    Uri = "www.lenta.ru/new/100500",
+                    Uri = "www.lenta.ru",
                     FoundDate = DateTime.Today.AddYears(-2),
                     LastScanDate = DateTime.Today,
                     Site = sites[0]
@@ -74,6 +79,22 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
                 new Page()
                 {
                     PageId = 2,
+                    Uri = "www.lenta.ru/new/100500",
+                    FoundDate = DateTime.Today.AddYears(-2),
+                    LastScanDate = DateTime.Today,
+                    Site = sites[0]
+                },
+                new Page()
+                {
+                    PageId = 3,
+                    Uri = "www.gazeta.ru",
+                    FoundDate = DateTime.Today.AddYears(-3),
+                    LastScanDate = DateTime.Today,
+                    Site = sites[1]
+                },
+                new Page()
+                {
+                    PageId = 4,
                     Uri = "www.gazeta.ru/new/100500",
                     FoundDate = DateTime.Today.AddYears(-3),
                     LastScanDate = DateTime.Today,

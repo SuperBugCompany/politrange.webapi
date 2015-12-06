@@ -28,6 +28,7 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
         public Keyword Add(Keyword keyword)
         {
             keyword.KeywordId = keywords.Max(x => x.KeywordId) + 1;
+
             keywords.Add(keyword);
 
             return keyword;
@@ -53,6 +54,21 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return keywords.Where(where);
         }
 
+        public bool Update(Keyword entity)
+        {
+            bool isUpdated = false;
+
+            var keyword = GetById(entity.KeywordId);
+
+            if (keyword != null)
+            {
+                keyword.Name = entity.Name;
+                isUpdated = true;
+            }
+
+            return isUpdated;
+        }
+
         private void Populate()
         {
             var persons = new List<Person>()
@@ -75,18 +91,21 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
                 {
                     KeywordId = 1,
                     Name = "Медведеву",
+                    PersonId = persons[0].PersonId,
                     Person = persons[0]
                 },
                 new Keyword()
                 {
                     KeywordId = 2,
                     Name = "Медведева",
+                    PersonId = persons[0].PersonId,
                     Person = persons[0]
                 },
                 new Keyword()
                 {
                     KeywordId = 3,
                     Name = "Шойгу",
+                    PersonId = persons[1].PersonId,
                     Person = persons[1]
                 }
             };

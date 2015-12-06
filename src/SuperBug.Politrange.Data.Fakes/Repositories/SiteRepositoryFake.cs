@@ -24,6 +24,21 @@ namespace SuperBug.Politrange.Data.Fakes.Repositories
             return sites.Find(x => x.SiteId == id);
         }
 
+        public bool Update(Site entity)
+        {
+            bool isUpdated = false;
+
+            var site = GetById(entity.SiteId);
+
+            if (site != null)
+            {
+                site.Name = entity.Name;
+                isUpdated = true;
+            }
+
+            return isUpdated;
+        }
+
         public bool Delete(int id)
         {
             bool isDelete = false;

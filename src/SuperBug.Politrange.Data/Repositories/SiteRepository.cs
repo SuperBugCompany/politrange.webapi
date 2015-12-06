@@ -32,6 +32,11 @@ namespace SuperBug.Politrange.Data.Repositories
             return site;
         }
 
+        public bool Update(Site entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool Delete(int id)
         {
             bool isDeleted = false;
