@@ -52,7 +52,7 @@ namespace SuperBug.Politrange.Services.Persons
 
         public IEnumerable<Keyword> GetKeywordsByPersonId(int personId)
         {
-            return keywordRepository.GetMany(x => x.Person.PersonId == personId);
+            return keywordRepository.GetMany(x => x.PersonId == personId);
         }
     }
 }
