@@ -10,6 +10,7 @@ namespace SuperBug.Politrange.Api.Mappers
         {
             Mapper.CreateMap<SiteViewModel, Site>();
             Mapper.CreateMap<PersonViewModel, Person>();
+            Mapper.CreateMap<KeywordViewModel, Keyword>();
 
         }
     }
