@@ -13,17 +13,17 @@ namespace SuperBug.Politrange.Services.Keywords
             this.keywordRepository = keywordRepository;
         }
 
-        public IEnumerable<Keyword> GetKeywords()
+        public IEnumerable<Keyword> GetAll()
         {
             return keywordRepository.GetAll();
         }
 
-        public Keyword AddKeyword(Keyword keyword)
+        public Keyword Add(Keyword keyword)
         {
             return keywordRepository.Add(keyword);
         }
 
-        public bool RemoveKeyword(int id)
+        public bool Remove(int id)
         {
             return keywordRepository.Delete(id);
         }
@@ -32,13 +32,10 @@ namespace SuperBug.Politrange.Services.Keywords
         {
             return keywordRepository.Update(keyword);
         }
-    }
 
-    public interface IKeywordService
-    {
-        IEnumerable<Keyword> GetKeywords();
-        Keyword AddKeyword(Keyword keyword);
-        bool RemoveKeyword(int id);
-        bool Update(Keyword keyword);
+        public IEnumerable<Keyword> GetByPersonId(int personId)
+        {
+            return keywordRepository.GetMany(x => x.PersonId == personId);
+        }
     }
 }

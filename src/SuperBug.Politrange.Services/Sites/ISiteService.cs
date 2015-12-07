@@ -6,9 +6,8 @@ namespace SuperBug.Politrange.Services.Sites
     public interface ISiteService
     {
         IEnumerable<Site> GetAll();
-        Site GetSitebyId(int id);
-        Site AddSite(Site site);
-        bool Delete(int id);
-        IEnumerable<Page> GetPagesBySiteId(int siteId);
+        Site GetbyId(int id);
+        Site Add(Site site);
+        bool Remove(int id);
     }
 }

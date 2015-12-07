@@ -26,7 +26,7 @@ namespace SuperBug.Politrange.Api.Controllers
 
         public IHttpActionResult Delete(int id)
         {
-            bool isUpdated = keywordService.RemoveKeyword(id);
+            bool isUpdated = keywordService.Remove(id);
 
             if (isUpdated)
             {

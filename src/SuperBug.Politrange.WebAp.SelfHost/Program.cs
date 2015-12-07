@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Owin.Hosting;
 using SuperBug.Politrange.Api;
 
 namespace SuperBug.Politrange.WebAp.SelfHost
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            using (WebApp.Start<Startup>("http://localhost:10101"))
+            string url = "http://localhost:10101";
+
+            using (WebApp.Start<Startup>(url))
             {
-                Console.WriteLine("Web Server is running.");
+                Console.WriteLine("Web Server is running. Use brower URL: " + url);
                 Console.WriteLine("Press any key to quit.");
                 Console.ReadLine();
             }

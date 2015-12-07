@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keywords\IKeywordService.cs" />
     <Compile Include="Keywords\KeywordService.cs" />
+    <Compile Include="Pages\IPageService.cs" />
     <Compile Include="Pages\PageService.cs" />
+    <Compile Include="Persons\IPersonService.cs" />
     <Compile Include="Persons\PersonService.cs" />
     <Compile Include="ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

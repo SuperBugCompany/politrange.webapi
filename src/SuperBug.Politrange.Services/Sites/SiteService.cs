@@ -20,12 +20,12 @@ namespace SuperBug.Politrange.Services.Sites
             return siteRepository.GetAll();
         }
 
-        public Site GetSitebyId(int id)
+        public Site GetbyId(int id)
         {
             return siteRepository.GetById(id);
         }
 
-        public Site AddSite(Site site)
+        public Site Add(Site site)
         {
             return siteRepository.Add(site);
         }
@@ -35,14 +35,9 @@ namespace SuperBug.Politrange.Services.Sites
             return siteRepository.Update(site);
         }
 
-        public bool Delete(int id)
+        public bool Remove(int id)
         {
             return siteRepository.Delete(id);
-        }
-
-        public IEnumerable<Page> GetPagesBySiteId(int siteId)
-        {
-            return pageRepository.GetMany(x => x.Site.SiteId == siteId);
         }
     }
 }

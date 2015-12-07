@@ -3,6 +3,7 @@ using System.Web.Http;
 using AutoMapper;
 using SuperBug.Politrange.Api.Models.ViewModels;
 using SuperBug.Politrange.Models;
+using SuperBug.Politrange.Services.Pages;
 using SuperBug.Politrange.Services.Sites;
 
 namespace SuperBug.Politrange.Api.Controllers
@@ -10,11 +11,13 @@ namespace SuperBug.Politrange.Api.Controllers
     [RoutePrefix("api/sites")]
     public class SiteController: ApiController
     {
+        private readonly IPageService pageService;
         private readonly ISiteService siteService;
 
-        public SiteController(ISiteService siteService)
+        public SiteController(ISiteService siteService, IPageService pageService)
         {
             this.siteService = siteService;
+            this.pageService = pageService;
         }
 
         public IHttpActionResult Get()
@@ -27,7 +30,7 @@ namespace SuperBug.Politrange.Api.Controllers
 
         public IHttpActionResult Get(int id)
         {
-            var site = siteService.GetSitebyId(id);
+            var site = siteService.GetbyId(id);
             var siteViewModel = Mapper.Map<Site, SiteViewModel>(site);
 
             return Ok(siteViewModel);
@@ -36,7 +39,7 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult Post(SiteViewModel siteViewModel)
         {
             var site = Mapper.Map<SiteViewModel, Site>(siteViewModel);
-            site = siteService.AddSite(site);
+            site = siteService.Add(site);
             siteViewModel = Mapper.Map<Site, SiteViewModel>(site);
 
             return Ok(siteViewModel);
@@ -44,7 +47,7 @@ namespace SuperBug.Politrange.Api.Controllers
 
         public IHttpActionResult Delete(int id)
         {
-            bool isDelete = siteService.Delete(id);
+            bool isDelete = siteService.Remove(id);
 
             if (isDelete)
             {
@@ -59,7 +62,7 @@ namespace SuperBug.Politrange.Api.Controllers
         [Route("{siteId:int}/pages")]
         public IHttpActionResult GetPagesBySite(int siteId)
         {
-            var pages = siteService.GetPagesBySiteId(siteId);
+            var pages = pageService.GetBySiteId(siteId);
             var pagesViewModel = Mapper.Map<IEnumerable<Page>, IEnumerable<PageViewModel>>(pages);
 
             return Ok(pagesViewModel);
