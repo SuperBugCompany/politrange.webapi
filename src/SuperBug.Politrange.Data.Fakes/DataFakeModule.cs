@@ -8,6 +8,7 @@ namespace SuperBug.Politrange.Data.Fakes
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<StatRepositoryFake>().As<IStatRepository>().SingleInstance();
             builder.RegisterType<SiteRepositoryFake>().As<ISiteRepository>().SingleInstance();
             builder.RegisterType<PageRepositoryFake>().As<IPageRepository>().SingleInstance();
             builder.RegisterType<PersonRepositoryFake>().As<IPersonRepository>().SingleInstance();

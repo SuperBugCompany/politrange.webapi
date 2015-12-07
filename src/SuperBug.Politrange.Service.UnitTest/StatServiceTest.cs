@@ -14,8 +14,8 @@ namespace SuperBug.Politrange.Service.UnitTest
     {
         private readonly ITestOutputHelper output;
 
-        Mock<IStatRepository> statRepositoryMock;
-        IStatService statService;
+        private Mock<IStatRepository> statRepositoryMock;
+        private IStatService statService;
 
         public StatServiceTest(ITestOutputHelper output)
         {
@@ -28,15 +28,39 @@ namespace SuperBug.Politrange.Service.UnitTest
         [Fact]
         public void ShouldBeReturnGroupByPersonSumRanks()
         {
+            //arrange
             statRepositoryMock.Setup(m => m.GetPageRanksBySite(It.IsAny<int>())).Returns(GetRatings);
 
-            var result = statService.GetPageRanksBySite(1).ToList();
+            //act
+            var result = statService.GetRanksBySite(1).ToList();
 
-            Assert.Equal(result[0].Rank, 25);
+            //assert
+            Assert.Equal(result[0].Rank, 30);
 
             foreach (PersonPageRank item in result)
             {
                 output.WriteLine("{0}: {1}", item.Person.Name, item.Rank);
+            }
+        }
+
+        [Fact]
+        public void ShouldBeReturnGroupDateByRangeDate()
+        {
+            //arrange
+            var ratings = GetRatings();
+            var beginDate = new DateTime(2012, 1, 1);
+            var endDate = new DateTime(2014, 1, 1);
+
+            statRepositoryMock.Setup(m => m.GetPageRanksByRangeDate(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                              .Returns(ratings.Where(d => (d.Page.FoundDate >= beginDate && d.Page.FoundDate <= endDate)));
+
+            //act
+            var result = statService.GetRanksByRangeDate(1, beginDate, endDate);
+
+            //assert
+            foreach (PersonPageRank item in result)
+            {
+                output.WriteLine("{0}, {1}, {2}", item.Person.Name, item.Rank, item.Page.FoundDate);
             }
         }
 
@@ -52,7 +76,6 @@ namespace SuperBug.Politrange.Service.UnitTest
 
             var persons = new List<Person>()
             {
-                new Person() {Name = "Путин"},
                 new Person() {Name = "Медведев"},
                 new Person() {Name = "Навальный"}
             };
@@ -61,17 +84,31 @@ namespace SuperBug.Politrange.Service.UnitTest
             {
                 new Page()
                 {
+                    Uri = "www.lenta.ru",
+                    Site = sites[0],
+                    FoundDate = new DateTime(2011, 1, 1),
+                    LastScanDate = DateTime.Today
+                },
+                new Page()
+                {
                     Uri = "www.lenta.ru/new/1",
                     Site = sites[0],
-                    FoundDate = new DateTime(2014, 1, 1),
-                    LastScanDate = new DateTime(2015, 1, 1)
+                    FoundDate = new DateTime(2012, 1, 1),
+                    LastScanDate = DateTime.Today
                 },
                 new Page()
                 {
                     Uri = "www.lenta.ru/new/2",
                     Site = sites[0],
                     FoundDate = new DateTime(2013, 1, 1),
-                    LastScanDate = new DateTime(2015, 1, 1)
+                    LastScanDate = DateTime.Today
+                },
+                new Page()
+                {
+                    Uri = "www.lenta.ru/new/2",
+                    Site = sites[0],
+                    FoundDate = new DateTime(2015, 1, 1),
+                    LastScanDate = DateTime.Today
                 }
             };
 
@@ -85,33 +122,33 @@ namespace SuperBug.Politrange.Service.UnitTest
                 },
                 new PersonPageRank()
                 {
-                    Page = pages[0],
-                    Person = persons[1],
-                    Rank = 10
-                },
-                new PersonPageRank()
-                {
-                    Page = pages[0],
-                    Person = persons[2],
-                    Rank = 10
-                },
-                new PersonPageRank()
-                {
                     Page = pages[1],
                     Person = persons[0],
-                    Rank = 15
+                    Rank = 10
+                },
+                new PersonPageRank()
+                {
+                    Page = pages[0],
+                    Person = persons[1],
+                    Rank = 10
+                },
+                new PersonPageRank()
+                {
+                    Page = pages[2],
+                    Person = persons[0],
+                    Rank = 10
                 },
                 new PersonPageRank()
                 {
                     Page = pages[1],
                     Person = persons[1],
-                    Rank = 15
+                    Rank = 10
                 },
                 new PersonPageRank()
                 {
-                    Page = pages[1],
-                    Person = persons[2],
-                    Rank = 15
+                    Page = pages[3],
+                    Person = persons[1],
+                    Rank = 10
                 }
             };
 
