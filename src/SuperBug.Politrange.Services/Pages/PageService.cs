@@ -27,6 +27,11 @@ namespace SuperBug.Politrange.Services.Pages
         {
             return pageRepository.Delete(id);
         }
+
+        public IEnumerable<Page> GetBySiteId(int siteId)
+        {
+            return pageRepository.GetMany(x => x.Site.SiteId == siteId);
+        }
     }
 
     public interface IPageService
@@ -34,5 +39,6 @@ namespace SuperBug.Politrange.Services.Pages
         IEnumerable<Page> GetAll();
         Page Add(Page page);
         bool Remove(int id);
+        IEnumerable<Page> GetBySiteId(int siteId);
     }
 }

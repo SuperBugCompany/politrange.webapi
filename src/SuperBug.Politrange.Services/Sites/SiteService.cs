@@ -39,10 +39,5 @@ namespace SuperBug.Politrange.Services.Sites
         {
             return siteRepository.Delete(id);
         }
-
-        public IEnumerable<Page> GetPagesBySiteId(int siteId)
-        {
-            return pageRepository.GetMany(x => x.Site.SiteId == siteId);
-        }
     }
 }
