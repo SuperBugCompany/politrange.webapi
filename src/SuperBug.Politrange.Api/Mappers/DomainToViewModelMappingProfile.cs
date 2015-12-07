@@ -13,6 +13,7 @@ namespace SuperBug.Politrange.Api.Mappers
 		    Mapper.CreateMap<Person, PersonViewModel>();
 		    Mapper.CreateMap<Keyword, KeywordViewModel>();
 		    Mapper.CreateMap<Page, PageViewModel>();
+		    Mapper.CreateMap<PersonPageRank, RangeStatViewModel>();
 		}
 	}
 }
