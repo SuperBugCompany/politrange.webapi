@@ -44,6 +44,7 @@
     <Compile Include="ViewModels\KeywordViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\PersonViewModel.cs" />
+    <Compile Include="ViewModels\RangeStatViewModel.cs" />
     <Compile Include="ViewModels\SiteViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

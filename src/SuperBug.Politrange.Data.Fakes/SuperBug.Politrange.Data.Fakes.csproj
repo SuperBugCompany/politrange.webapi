@@ -49,6 +49,7 @@
     <Compile Include="Repositories\PageRepositoryFake.cs" />
     <Compile Include="Repositories\PersonRepositoryFake.cs" />
     <Compile Include="Repositories\SiteRepositoryFake.cs" />
+    <Compile Include="Repositories\StatRepositoryFake.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SuperBug.Politrange.Data\SuperBug.Politrange.Data.csproj">
