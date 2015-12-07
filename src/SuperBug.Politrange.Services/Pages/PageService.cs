@@ -13,17 +13,17 @@ namespace SuperBug.Politrange.Services.Pages
             this.pageRepository = pageRepository;
         }
 
-        public IEnumerable<Page> GetPages()
+        public IEnumerable<Page> GetAll()
         {
             return pageRepository.GetAll();
         }
 
-        public Page AddPage(Page page)
+        public Page Add(Page page)
         { 
             return pageRepository.Add(page);
         }
 
-        public bool RemovePage(int id)
+        public bool Remove(int id)
         {
             return pageRepository.Delete(id);
         }
@@ -31,8 +31,8 @@ namespace SuperBug.Politrange.Services.Pages
 
     public interface IPageService
     {
-        IEnumerable<Page> GetPages();
-        Page AddPage(Page page);
-        bool RemovePage(int id);
+        IEnumerable<Page> GetAll();
+        Page Add(Page page);
+        bool Remove(int id);
     }
 }
