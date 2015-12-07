@@ -11,7 +11,6 @@ namespace SuperBug.Politrange.Services.Persons
         Person Add(Person person);
         bool Update(Person person);
         bool Remove(int id);
-        IEnumerable<Keyword> GetKeywordsByPersonId(int personId);
     }
 
     public class PersonService: IPersonService
@@ -48,11 +47,6 @@ namespace SuperBug.Politrange.Services.Persons
         public bool Remove(int id)
         {
             return personRepository.Delete(id);
-        }
-
-        public IEnumerable<Keyword> GetKeywordsByPersonId(int personId)
-        {
-            return keywordRepository.GetMany(x => x.PersonId == personId);
         }
     }
 }
