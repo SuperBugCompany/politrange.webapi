@@ -38,13 +38,4 @@ namespace SuperBug.Politrange.Services.Keywords
             return keywordRepository.GetMany(x => x.PersonId == personId);
         }
     }
-
-    public interface IKeywordService
-    {
-        IEnumerable<Keyword> GetAll();
-        Keyword Add(Keyword keyword);
-        bool Remove(int id);
-        bool Update(Keyword keyword);
-        IEnumerable<Keyword> GetByPersonId(int personId);
-    }
 }

@@ -33,12 +33,4 @@ namespace SuperBug.Politrange.Services.Pages
             return pageRepository.GetMany(x => x.Site.SiteId == siteId);
         }
     }
-
-    public interface IPageService
-    {
-        IEnumerable<Page> GetAll();
-        Page Add(Page page);
-        bool Remove(int id);
-        IEnumerable<Page> GetBySiteId(int siteId);
-    }
 }
