@@ -9,6 +9,11 @@ namespace SuperBug.Politrange.Api.Mappers
 		protected override void Configure()
 		{
 		    Mapper.CreateMap<PersonPageRank, CommonStatViewModel>();
+		    Mapper.CreateMap<Site, SiteViewModel>();
+		    Mapper.CreateMap<Person, PersonViewModel>();
+		    Mapper.CreateMap<Keyword, KeywordViewModel>();
+		    Mapper.CreateMap<Page, PageViewModel>();
+		    Mapper.CreateMap<PersonPageRank, RangeStatViewModel>();
 		}
 	}
 }

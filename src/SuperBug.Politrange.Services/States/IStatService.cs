@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Services.States
 {
     public interface IStatService
     {
-        IEnumerable<PersonPageRank> GetPageRanksBySite(int id);
+        IEnumerable<PersonPageRank> GetRanksBySite(int id);
+        IEnumerable<PersonPageRank> GetRanksByRangeDate(int id, DateTime beginDate, DateTime endDate);
     }
 }

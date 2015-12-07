@@ -10,5 +10,7 @@ namespace SuperBug.Politrange.Data.Contexts
         DbSet<PersonPageRank> PersonPageRanks { get; set; }
         DbSet<Page> Pages { get; set; }
         DbSet<Site> Sites { get; set; }
+
+        int SaveChanges();
     }
 }

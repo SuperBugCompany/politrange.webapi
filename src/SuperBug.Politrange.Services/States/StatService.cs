@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SuperBug.Politrange.Data.Repositories;
 using SuperBug.Politrange.Models;
@@ -13,13 +14,20 @@ namespace SuperBug.Politrange.Services.States
         {
             this.statRepository = statRepository;
         }
-        
+
         //Todo: Bad logic
-        public IEnumerable<PersonPageRank> GetPageRanksBySite(int id)
+        public IEnumerable<PersonPageRank> GetRanksBySite(int id)
         {
             IEnumerable<PersonPageRank> ranks = statRepository.GetPageRanksBySite(id);
 
-            return ranks.GroupBy(x => x.Person).Select(s=> new PersonPageRank(){Person = s.Key, Rank = s.Sum(e=>e.Rank)});
+            return ranks.GroupBy(x => x.Person).Select(s => new PersonPageRank() {Person = s.Key, Rank = s.Sum(e => e.Rank)});
+        }
+
+        public IEnumerable<PersonPageRank> GetRanksByRangeDate(int id, DateTime beginDate, DateTime endDate)
+        {
+            IEnumerable<PersonPageRank> ranks = statRepository.GetPageRanksByRangeDate(id, beginDate, endDate);
+
+            return ranks;
         }
     }
 }

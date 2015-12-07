@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using SuperBug.Politrange.Data.Contexts;
@@ -19,6 +20,11 @@ namespace SuperBug.Politrange.Data.Repositories
         public IEnumerable<PersonPageRank> GetPageRanksBySite(int siteId)
         {
             return politrangeContext.PersonPageRanks.Where(x => x.Page.Site.SiteId == siteId).Include(x => x.Person);
+        }
+
+        public IEnumerable<PersonPageRank> GetPageRanksByRangeDate(int siteId, DateTime beginDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
         }
     }
 }
