@@ -11,6 +11,7 @@ namespace SuperBug.Politrange.Data.Contexts
         public PolitrangeContext()
             : base()
         {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<PolitrangeContext>());
         }
 
         public PolitrangeContext(DbConnection existingConnection, bool contextOwnsConnection)
