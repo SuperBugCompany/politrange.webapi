@@ -34,10 +34,10 @@ namespace SuperBug.Politrange.Api
             //Todo: Переключать между фейковыми и настоящими данными путем раскоментированием и закоментированием, см ниже.
 
             // Фейковые данные
-            builder.RegisterModule<DataFakeModule>();
+//            builder.RegisterModule<DataFakeModule>();
 
             // Настоящие данные
-		    //builder.RegisterModule<DataModule>();
+		    builder.RegisterModule<DataModule>();
 
             builder.RegisterModule<ServiceModule>();
 
