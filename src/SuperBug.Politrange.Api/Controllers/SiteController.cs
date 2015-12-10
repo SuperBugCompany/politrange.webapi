@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using AutoMapper;
 using SuperBug.Politrange.Api.Models.ViewModels;
 using SuperBug.Politrange.Models;
@@ -23,6 +26,7 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult Get()
         {
             var sites = siteService.GetAll();
+
             var sitesViewModel = Mapper.Map<IEnumerable<Site>, IEnumerable<SiteViewModel>>(sites);
 
             return Ok(sitesViewModel);
@@ -31,6 +35,7 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult Get(int id)
         {
             var site = siteService.GetbyId(id);
+
             var siteViewModel = Mapper.Map<Site, SiteViewModel>(site);
 
             return Ok(siteViewModel);
@@ -39,7 +44,9 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult Post(SiteViewModel siteViewModel)
         {
             var site = Mapper.Map<SiteViewModel, Site>(siteViewModel);
+
             site = siteService.Add(site);
+
             siteViewModel = Mapper.Map<Site, SiteViewModel>(site);
 
             return Ok(siteViewModel);
@@ -47,25 +54,28 @@ namespace SuperBug.Politrange.Api.Controllers
 
         public IHttpActionResult Delete(int id)
         {
-            bool isDelete = siteService.Remove(id);
+            bool isDeleted = siteService.Remove(id);
 
-            if (isDelete)
-            {
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+            return GetResponseMessageResult(isDeleted);
         }
 
         [Route("{siteId:int}/pages")]
         public IHttpActionResult GetPagesBySite(int siteId)
         {
             var pages = pageService.GetBySiteId(siteId);
+
             var pagesViewModel = Mapper.Map<IEnumerable<Page>, IEnumerable<PageViewModel>>(pages);
 
             return Ok(pagesViewModel);
+        }
+
+        private IHttpActionResult GetResponseMessageResult(bool condition)
+        {
+            var httpResponseMessage = condition
+                ? new HttpResponseMessage(HttpStatusCode.OK)
+                : new HttpResponseMessage(HttpStatusCode.NotFound);
+
+            return new ResponseMessageResult(httpResponseMessage);
         }
     }
 }
