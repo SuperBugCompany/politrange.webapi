@@ -3,9 +3,7 @@ using Moq;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Data.Repositories;
 using SuperBug.Politrange.Models;
-using SuperBug.Politrange.Services.Keywords;
 using SuperBug.Politrange.Services.Persons;
-using SuperBug.Politrange.Services.States;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,24 +11,23 @@ namespace SuperBug.Politrange.Service.UnitTest
 {
     public class PersonServiceTest
     {
-        private ITestOutputHelper output;
-        private IPersonService personService;
         private Mock<IKeywordRepository> keywordRepositoryMock;
+        private ITestOutputHelper output;
+        private PersonService personService;
 
         public PersonServiceTest(ITestOutputHelper output)
         {
             this.output = output;
-            IPolitrangeContext context = new PolitrangeContext();
+            PolitrangeContext context = new PolitrangeContext();
             IPersonRepository personRepository = new PersonRepository(context);
             keywordRepositoryMock = new Mock<IKeywordRepository>();
-            personService = new PersonService(personRepository,keywordRepositoryMock.Object);
+            personService = new PersonService(personRepository, keywordRepositoryMock.Object);
         }
 
         [Fact]
         public void ShouldBeReturnListPersons()
         {
             //arrange
-            
 
             //act
             var result = personService.GetAll();
@@ -42,7 +39,6 @@ namespace SuperBug.Politrange.Service.UnitTest
             {
                 output.WriteLine(person.Name);
             }
-            
         }
 
         [Fact]
@@ -55,14 +51,14 @@ namespace SuperBug.Politrange.Service.UnitTest
             var result = personService.GetById(id);
 
             //assert
-            Assert.Equal(result.PersonId, id);         
+            Assert.Equal(result.PersonId, id);
         }
 
         [Fact]
         public void ShouldBeAddedPerson()
         {
             //arrange
-            var person = new Person(){Name = "Меркель"};
+            var person = new Person() {Name = "Меркель"};
 
             //act
             var result = personService.Add(person);
@@ -71,7 +67,6 @@ namespace SuperBug.Politrange.Service.UnitTest
             Assert.Equal(result.Name, person.Name);
 
             output.WriteLine(result.PersonId.ToString());
-            
         }
 
         [Fact]
@@ -80,10 +75,10 @@ namespace SuperBug.Politrange.Service.UnitTest
             //arrange
             var repository = new PersonRepository(new PolitrangeContext());
             int id = 1;
-            var person = new Person(){Name = "Вилка"};
+            var person = new Person() {PersonId = id, Name = "Вилка"};
 
             //act
-            var result = repository.UpdateNew(id, person);
+            var result = repository.Update(person);
 
             //assert
             Assert.True(result);
@@ -100,7 +95,6 @@ namespace SuperBug.Politrange.Service.UnitTest
 
             //assert
             Assert.True(result);
-            
         }
     }
 }
