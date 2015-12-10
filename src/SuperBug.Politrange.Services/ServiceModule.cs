@@ -1,10 +1,6 @@
-﻿using Autofac;
-using Autofac.Core;
-using SuperBug.Politrange.Services.Keywords;
-using SuperBug.Politrange.Services.Pages;
-using SuperBug.Politrange.Services.Persons;
-using SuperBug.Politrange.Services.Sites;
-using SuperBug.Politrange.Services.States;
+﻿using System.Reflection;
+using Autofac;
+using Module = Autofac.Module;
 
 namespace SuperBug.Politrange.Services
 {
@@ -12,11 +8,10 @@ namespace SuperBug.Politrange.Services
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<SiteService>().As<ISiteService>().InstancePerLifetimeScope();
-            builder.RegisterType<StatService>().As<IStatService>().InstancePerLifetimeScope();
-            builder.RegisterType<PersonService>().As<IPersonService>().InstancePerLifetimeScope();
-            builder.RegisterType<PageService>().As<IPageService>().InstancePerLifetimeScope();
-            builder.RegisterType<KeywordService>().As<IKeywordService>().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(Assembly.Load("SuperBug.Politrange.Services"))
+                   .Where(t => t.Name.EndsWith("Service"))
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
         }
     }
 }
