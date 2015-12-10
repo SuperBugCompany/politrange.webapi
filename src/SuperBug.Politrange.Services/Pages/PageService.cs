@@ -30,7 +30,7 @@ namespace SuperBug.Politrange.Services.Pages
 
         public IEnumerable<Page> GetBySiteId(int siteId)
         {
-            return pageRepository.GetMany(x => x.Site.SiteId == siteId);
+            return pageRepository.GetMany(x => x.SiteId == siteId);
         }
     }
 }

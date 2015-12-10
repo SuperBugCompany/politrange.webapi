@@ -26,6 +26,7 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult Get()
         {
             var persons = personService.GetAll();
+
             var personsViewModel = Mapper.Map<IEnumerable<Person>, IEnumerable<PersonViewModel>>(persons);
 
             return Ok(personsViewModel);
@@ -34,6 +35,7 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult Get(int id)
         {
             var person = personService.GetById(id);
+
             var personViewModel = Mapper.Map<Person, PersonViewModel>(person);
 
             return Ok(personViewModel);
@@ -41,17 +43,19 @@ namespace SuperBug.Politrange.Api.Controllers
 
         public IHttpActionResult Post(PersonViewModel personViewModel)
         {
-            var person = new Person();
-            Mapper.Map(personViewModel, person);
+            var person = Mapper.Map<PersonViewModel, Person>(personViewModel);
+
             person = personService.Add(person);
-            Mapper.Map(person, personViewModel);
+
+            personViewModel = Mapper.Map<Person, PersonViewModel>(person);
+
             return Ok(personViewModel);
         }
 
         public IHttpActionResult Put(int id, PersonViewModel personViewModel)
         {
-            var person = new Person();
-            Mapper.Map(personViewModel, person);
+            var person = Mapper.Map<PersonViewModel, Person>(personViewModel);
+
             person.PersonId = id;
 
             bool isUpdated = personService.Update(person);
@@ -70,7 +74,9 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult GetKeywordsByPerson(int personId)
         {
             var keywords = keywordService.GetByPersonId(personId);
+
             var keywordsViewModel = Mapper.Map<IEnumerable<Keyword>, IEnumerable<KeywordViewModel>>(keywords);
+
             return Ok(keywordsViewModel);
         }
 
@@ -78,8 +84,11 @@ namespace SuperBug.Politrange.Api.Controllers
         public IHttpActionResult PostKeyword(int personId, KeywordViewModel keywordViewModel)
         {
             var keyword = Mapper.Map<KeywordViewModel, Keyword>(keywordViewModel);
+
             keyword.PersonId = personId;
+
             keyword = keywordService.Add(keyword);
+
             Mapper.Map(keyword, keywordViewModel);
 
             return Ok(keywordViewModel);

@@ -4,7 +4,6 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using Owin;
 using SuperBug.Politrange.Data;
-using SuperBug.Politrange.Data.Fakes;
 using SuperBug.Politrange.Services;
 
 namespace SuperBug.Politrange.Api
