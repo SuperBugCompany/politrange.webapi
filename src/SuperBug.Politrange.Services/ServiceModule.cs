@@ -12,11 +12,11 @@ namespace SuperBug.Politrange.Services
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<SiteService>().As<ISiteService>();
-            builder.RegisterType<StatService>().As<IStatService>();
-            builder.RegisterType<PersonService>().As<IPersonService>();
-            builder.RegisterType<PageService>().As<IPageService>();
-            builder.RegisterType<KeywordService>().As<IKeywordService>();
+            builder.RegisterType<SiteService>().As<ISiteService>().InstancePerLifetimeScope();
+            builder.RegisterType<StatService>().As<IStatService>().InstancePerLifetimeScope();
+            builder.RegisterType<PersonService>().As<IPersonService>().InstancePerLifetimeScope();
+            builder.RegisterType<PageService>().As<IPageService>().InstancePerLifetimeScope();
+            builder.RegisterType<KeywordService>().As<IKeywordService>().InstancePerLifetimeScope();
         }
     }
 }

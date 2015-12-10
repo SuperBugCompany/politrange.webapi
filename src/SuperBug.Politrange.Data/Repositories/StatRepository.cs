@@ -9,22 +9,25 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     public class StatRepository: IStatRepository
     {
-        private readonly IPolitrangeContext politrangeContext;
+        private readonly PolitrangeContext context;
 
-        public StatRepository(IPolitrangeContext politrangeContext)
+        public StatRepository(PolitrangeContext context)
         {
-            this.politrangeContext = politrangeContext;
+            this.context = context;
         }
 
         //Todo: Плохой запрос, необходимо исключать подгрузки таблицы Sites.
         public IEnumerable<PersonPageRank> GetPageRanksBySite(int siteId)
         {
-            return politrangeContext.PersonPageRanks.Where(x => x.Page.Site.SiteId == siteId).Include(x => x.Person);
+            return context.PersonPageRanks.Where(x => x.Page.Site.SiteId == siteId).Include(x => x.Person);
         }
 
         public IEnumerable<PersonPageRank> GetPageRanksByRangeDate(int siteId, DateTime beginDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            return
+                context.PersonPageRanks.Where(x => x.Page.Site.SiteId == siteId)
+                       .Where(d => (d.Page.FoundDate >= beginDate && d.Page.FoundDate <= endDate))
+                       .Include(p => p.Person);
         }
     }
 }

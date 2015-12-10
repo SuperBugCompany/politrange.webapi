@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Models;
@@ -7,9 +8,9 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     public class SiteRepository: ISiteRepository
     {
-        private readonly IPolitrangeContext context;
+        private readonly PolitrangeContext context;
 
-        public SiteRepository(IPolitrangeContext context)
+        public SiteRepository(PolitrangeContext context)
         {
             this.context = context;
         }
@@ -21,28 +22,38 @@ namespace SuperBug.Politrange.Data.Repositories
 
         public Site GetById(int id)
         {
-            return context.Sites.FirstOrDefault(x => x.SiteId == id);
+            return context.Sites.Find(id);
         }
 
-        public Site Add(Site site)
+        public Site Add(Site entity)
         {
-            site = context.Sites.Add(site);
+            entity = context.Sites.Add(entity);
             context.SaveChanges();
 
-            return site;
+            return entity;
         }
 
         public bool Update(Site entity)
         {
-            throw new System.NotImplementedException();
+            bool isUpdated = false;
+
+            context.Sites.Attach(entity);
+            context.Entry(entity).State = EntityState.Modified;
+
+            if (context.SaveChanges() > 0)
+            {
+                isUpdated = true;
+            }
+
+            return isUpdated;
         }
 
         public bool Delete(int id)
         {
             bool isDeleted = false;
 
-            Site site = context.Sites.Find(id);
-            
+            var site = GetById(id);
+
             if (site != null)
             {
                 context.Sites.Remove(site);

@@ -1,12 +1,21 @@
-﻿using System.Data.Entity;
+﻿using System.Data.Common;
+using System.Data.Entity;
+using MySql.Data.Entity;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Contexts
 {
-    public class PolitrangeContext: DbContext, IPolitrangeContext
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
+    public class PolitrangeContext: DbContext
     {
         public PolitrangeContext()
-            : base("PolitrangeContext")
+            : base()
+        {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<PolitrangeContext>());
+        }
+
+        public PolitrangeContext(DbConnection existingConnection, bool contextOwnsConnection)
+            : base(existingConnection, contextOwnsConnection)
         {
         }
 
@@ -15,5 +24,10 @@ namespace SuperBug.Politrange.Data.Contexts
         public DbSet<PersonPageRank> PersonPageRanks { get; set; }
         public DbSet<Page> Pages { get; set; }
         public DbSet<Site> Sites { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -1,43 +1,43 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Repositories
 {
-    public class PersonRepository: IPersonRepository
+    internal class PageRepository: IPageRepository
     {
         private readonly PolitrangeContext context;
 
-        public PersonRepository(PolitrangeContext context)
+        public PageRepository(PolitrangeContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Person> GetAll()
+        public IEnumerable<Page> GetAll()
         {
-            return context.Persons.ToList();
+            return context.Pages.ToList();
         }
 
-        public Person GetById(int id)
+        public Page GetById(int id)
         {
-            return context.Persons.Find(id);
+            return context.Pages.Find(id);
         }
 
-        public Person Add(Person entity)
+        public Page Add(Page entity)
         {
-            entity = context.Persons.Add(entity);
+            entity = context.Pages.Add(entity);
             context.SaveChanges();
             return entity;
         }
 
-        public bool Update(Person entity)
+        public bool Update(Page entity)
         {
             bool isUpdated = false;
 
-            context.Persons.Attach(entity);
+            context.Pages.Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
 
             if (context.SaveChanges() > 0)
@@ -52,16 +52,21 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             bool isDeleted = false;
 
-            var person = GetById(id);
+            var page = GetById(id);
 
-            if (person != null)
+            if (page != null)
             {
-                context.Persons.Remove(person);
+                context.Pages.Remove(page);
                 context.SaveChanges();
                 isDeleted = true;
             }
 
             return isDeleted;
+        }
+
+        public IEnumerable<Page> GetMany(Func<Page, bool> where)
+        {
+            return context.Pages.Where(where);
         }
     }
 }

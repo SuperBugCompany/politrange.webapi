@@ -14,10 +14,10 @@ namespace SuperBug.Politrange.Api.Controllers
     [RoutePrefix("api/persons")]
     public class PersonController: ApiController
     {
-        private readonly IPersonService personService;
         private readonly IKeywordService keywordService;
+        private readonly IPersonService personService;
 
-        public PersonController(IPersonService personService,IKeywordService keywordService)
+        public PersonController(IPersonService personService, IKeywordService keywordService)
         {
             this.personService = personService;
             this.keywordService = keywordService;
@@ -46,17 +46,24 @@ namespace SuperBug.Politrange.Api.Controllers
             person = personService.Add(person);
             Mapper.Map(person, personViewModel);
             return Ok(personViewModel);
-        } 
+        }
+
+        public IHttpActionResult Put(int id, PersonViewModel personViewModel)
+        {
+            var person = new Person();
+            Mapper.Map(personViewModel, person);
+            person.PersonId = id;
+
+            bool isUpdated = personService.Update(person);
+
+            return GetResponseMessageResult(isUpdated);
+        }
 
         public IHttpActionResult Delete(int id)
         {
             bool isDeleted = personService.Remove(id);
 
-            var httpResponseMessage = isDeleted
-                ? new HttpResponseMessage(HttpStatusCode.OK)
-                : new HttpResponseMessage(HttpStatusCode.NotFound);
-
-            return new ResponseMessageResult(httpResponseMessage);
+            return GetResponseMessageResult(isDeleted);
         }
 
         [Route("{personId:int}/keywords")]
@@ -75,7 +82,16 @@ namespace SuperBug.Politrange.Api.Controllers
             keyword = keywordService.Add(keyword);
             Mapper.Map(keyword, keywordViewModel);
 
-            return Ok(keywordViewModel);      
+            return Ok(keywordViewModel);
+        }
+
+        private IHttpActionResult GetResponseMessageResult(bool condition)
+        {
+            var httpResponseMessage = condition
+                ? new HttpResponseMessage(HttpStatusCode.OK)
+                : new HttpResponseMessage(HttpStatusCode.NotFound);
+
+            return new ResponseMessageResult(httpResponseMessage);
         }
     }
 }
