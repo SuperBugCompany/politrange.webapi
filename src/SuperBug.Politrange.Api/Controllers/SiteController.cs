@@ -52,6 +52,17 @@ namespace SuperBug.Politrange.Api.Controllers
             return Ok(siteViewModel);
         }
 
+        public IHttpActionResult Put(int id, SiteViewModel siteViewModel)
+        {
+            var site = Mapper.Map<SiteViewModel, Site>(siteViewModel);
+            
+            site.SiteId = id;
+
+            bool isUpdated = siteService.Update(site);
+
+            return GetResponseMessageResult(isUpdated);
+        }
+
         public IHttpActionResult Delete(int id)
         {
             bool isDeleted = siteService.Remove(id);
