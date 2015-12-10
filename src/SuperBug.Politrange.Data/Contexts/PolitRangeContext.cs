@@ -6,7 +6,7 @@ using SuperBug.Politrange.Models;
 namespace SuperBug.Politrange.Data.Contexts
 {
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
-    public class PolitrangeContext: DbContext, IPolitrangeContext
+    public class PolitrangeContext: DbContext
     {
         public PolitrangeContext()
             : base()
@@ -28,11 +28,6 @@ namespace SuperBug.Politrange.Data.Contexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Keyword>().MapToStoredProcedures();
-            modelBuilder.Entity<Person>().MapToStoredProcedures();
-            modelBuilder.Entity<PersonPageRank>().MapToStoredProcedures();
-            modelBuilder.Entity<Page>().MapToStoredProcedures();
-            modelBuilder.Entity<Site>().MapToStoredProcedures();
         }
     }
 }
