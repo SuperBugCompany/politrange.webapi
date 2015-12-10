@@ -32,6 +32,7 @@ namespace SuperBug.Politrange.Data.Contexts
             modelBuilder.Entity<PersonPageRank>().HasOptional(x => x.Page).WithOptionalDependent().WillCascadeOnDelete(true);
             modelBuilder.Entity<Keyword>().HasOptional(x => x.Person).WithOptionalDependent().WillCascadeOnDelete(true);
             modelBuilder.Entity<Page>().HasOptional(x => x.Site).WithOptionalDependent().WillCascadeOnDelete(true);
+            modelBuilder.Entity<Person>().ToTable("Persons");
         }
     }
 }
