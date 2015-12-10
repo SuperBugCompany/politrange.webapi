@@ -30,6 +30,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ConsoleRelease|AnyCPU'">
+    <OutputPath>bin\ConsoleRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\..\lib\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
@@ -70,8 +79,8 @@
     <Compile Include="Repositories\IPersonRepository.cs" />
     <Compile Include="Repositories\ISiteRepository.cs" />
     <Compile Include="Repositories\IStatRepository.cs" />
-    <Compile Include="Repositories\KeywordRepository.cs"/>
-    <Compile Include="Repositories\PageRepository.cs"/>
+    <Compile Include="Repositories\KeywordRepository.cs" />
+    <Compile Include="Repositories\PageRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
     <Compile Include="Repositories\SiteRepository.cs" />
     <Compile Include="Repositories\StatRepository.cs" />
