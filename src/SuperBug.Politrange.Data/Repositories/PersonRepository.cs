@@ -7,7 +7,7 @@ using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Repositories
 {
-    internal class PersonRepository: IPersonRepository
+    public class PersonRepository: IPersonRepository
     {
         private readonly PolitrangeContext context;
 
