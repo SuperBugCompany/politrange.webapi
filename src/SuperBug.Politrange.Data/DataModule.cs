@@ -1,17 +1,20 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using SuperBug.Politrange.Data.Contexts;
-using SuperBug.Politrange.Data.Repositories;
+using Module = Autofac.Module;
 
 namespace SuperBug.Politrange.Data
 {
-	public class DataModule: Module
-	{
-		protected override void Load(ContainerBuilder builder)
-		{
-		    builder.RegisterType<PolitrangeContext>().As<IPolitrangeContext>();
+    public class DataModule: Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<PolitrangeContext>().InstancePerRequest();
 
-		    builder.RegisterType<SiteRepository>().As<ISiteRepository>();
-		    builder.RegisterType<StatRepository>().As<IStatRepository>();
-		}
-	}
+            builder.RegisterAssemblyTypes(Assembly.Load("SuperBug.Politrange.Data"))
+                   .Where(t => t.Name.EndsWith("Repository"))
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+        }
+    }
 }

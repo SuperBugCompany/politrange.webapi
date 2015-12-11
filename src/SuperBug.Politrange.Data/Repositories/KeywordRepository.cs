@@ -1,43 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Repositories
 {
-    public class PersonRepository: IPersonRepository
+    class KeywordRepository: IKeywordRepository
     {
         private readonly PolitrangeContext context;
 
-        public PersonRepository(PolitrangeContext context)
+        public KeywordRepository(PolitrangeContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Person> GetAll()
+        public IEnumerable<Keyword> GetAll()
         {
-            return context.Persons.ToList();
+            return context.Keywords.ToList();
         }
 
-        public Person GetById(int id)
+        public Keyword GetById(int id)
         {
-            return context.Persons.Find(id);
+            return context.Keywords.Find(id);
         }
 
-        public Person Add(Person entity)
+        public Keyword Add(Keyword entity)
         {
-            entity = context.Persons.Add(entity);
+            entity = context.Keywords.Add(entity);
             context.SaveChanges();
             return entity;
         }
 
-        public bool Update(Person entity)
+        public bool Update(Keyword entity)
         {
             bool isUpdated = false;
 
-            context.Persons.Attach(entity);
+            context.Keywords.Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
 
             if (context.SaveChanges() > 0)
@@ -52,16 +52,21 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             bool isDeleted = false;
 
-            var person = GetById(id);
+            var keyword = GetById(id);
 
-            if (person != null)
+            if (keyword != null)
             {
-                context.Persons.Remove(person);
+                context.Keywords.Remove(keyword);
                 context.SaveChanges();
                 isDeleted = true;
             }
 
             return isDeleted;
+        }
+
+        public IEnumerable<Keyword> GetMany(Func<Keyword, bool> where)
+        {
+            return context.Keywords.Where(where);
         }
     }
 }

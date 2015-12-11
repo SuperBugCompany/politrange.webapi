@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SuperBug.Politrange.Models
 {
@@ -8,6 +9,8 @@ namespace SuperBug.Politrange.Models
 		public string Uri { get; set; }
 		public DateTime FoundDate { get; set; }
 		public DateTime LastScanDate { get; set; }
-		public Site Site { get; set; }
+	    public int SiteId { get; set; }
+		public virtual Site Site { get; set; }
+	    public virtual ICollection<PersonPageRank> PersonPageRanks { get; set; }
 	}
 }
