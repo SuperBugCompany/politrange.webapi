@@ -27,7 +27,19 @@ namespace SuperBug.Politrange.Services.Sites
 
         public Site Add(Site site)
         {
-            return siteRepository.Add(site);
+            site = siteRepository.Add(site);
+
+            string url = GetUrl(site.Name);
+
+            var page = new Page()
+            {
+                Uri = url,
+                Site = site,
+            };
+
+            pageRepository.Add(page);
+
+            return site;
         }
 
         public bool Update(Site site)
@@ -39,5 +51,13 @@ namespace SuperBug.Politrange.Services.Sites
         {
             return siteRepository.Delete(id);
         }
+
+        private string GetUrl(string name)
+        {
+            string url = name.ToLower();
+
+            return url.Contains("www.") ? url : url.Insert(0, "www.");
+        }
+
     }
 }
