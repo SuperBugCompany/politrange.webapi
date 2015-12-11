@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
 using MySql.Data.Entity;
+using SuperBug.Politrange.Data.Configurations;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Contexts
@@ -27,12 +28,10 @@ namespace SuperBug.Politrange.Data.Contexts
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<PersonPageRank>().HasOptional(x=>x.Person).WithOptionalDependent().WillCascadeOnDelete(true);
-            modelBuilder.Entity<PersonPageRank>().HasOptional(x => x.Page).WithOptionalDependent().WillCascadeOnDelete(true);
-            modelBuilder.Entity<Keyword>().HasOptional(x => x.Person).WithOptionalDependent().WillCascadeOnDelete(true);
-            modelBuilder.Entity<Page>().HasOptional(x => x.Site).WithOptionalDependent().WillCascadeOnDelete(true);
-            modelBuilder.Entity<Person>().ToTable("Persons");
+            modelBuilder.Configurations.Add(new PersonConfiguration());
+            modelBuilder.Configurations.Add(new PersonPageRankConfiguration());
+            modelBuilder.Configurations.Add(new KeywordConfiguration());
+            modelBuilder.Configurations.Add(new PageConfiguration());
         }
     }
 }
