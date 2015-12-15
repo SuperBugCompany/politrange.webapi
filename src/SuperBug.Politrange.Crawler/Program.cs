@@ -1,15 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Autofac;
+using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Crawler
 {
-	class Program
-	{
-		static void Main( string[] args )
-		{
-		}
-	}
+    internal class Program
+    {
+        private static void Main(string[] args)
+        {
+            var container = AutofacContainer.Get();
+
+            IEnumerable<Site> sites;
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var crawlerManage = scope.Resolve<CrawlerManage>();
+
+                crawlerManage.InitializationCrawler();
+
+
+            }
+
+            Console.ReadLine();
+        }
+    }
 }
