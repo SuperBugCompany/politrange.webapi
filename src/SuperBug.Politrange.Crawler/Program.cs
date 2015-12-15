@@ -11,14 +11,8 @@ namespace SuperBug.Politrange.Crawler
         {
             var container = AutofacContainer.Get();
 
-            IEnumerable<Site> sites;
-
             using (var scope = container.BeginLifetimeScope())
             {
-                var crawlerManage = scope.Resolve<CrawlerManage>();
-
-                crawlerManage.InitializationCrawler();
-
 
             }
 
