@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperBug.Politrange.Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperBug.Politrange.Crawler.UnitTest", "SuperBug.Politrange.Crawler.UnitTest\SuperBug.Politrange.Crawler.UnitTest.csproj", "{18B6C5BA-492E-4670-9F97-1548187552C7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegralTests", "IntegralTests", "{B12DEA48-A3D7-4F39-BCF8-5F31C31BB41D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperBug.Politrange.Crawler.IntegralTest", "SuperBug.Politrange.Crawler.IntegralTest\SuperBug.Politrange.Crawler.IntegralTest.csproj", "{4DB4EE94-6E03-4488-96D0-3952C0DC0F4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,10 @@ Global
 		{18B6C5BA-492E-4670-9F97-1548187552C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18B6C5BA-492E-4670-9F97-1548187552C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18B6C5BA-492E-4670-9F97-1548187552C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB4EE94-6E03-4488-96D0-3952C0DC0F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB4EE94-6E03-4488-96D0-3952C0DC0F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB4EE94-6E03-4488-96D0-3952C0DC0F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB4EE94-6E03-4488-96D0-3952C0DC0F4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +86,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A0B7AFC6-BC4C-421B-9E60-49238F23A63A} = {12425D4E-91B0-41A5-8358-4F7F77A3DABF}
 		{18B6C5BA-492E-4670-9F97-1548187552C7} = {12425D4E-91B0-41A5-8358-4F7F77A3DABF}
+		{4DB4EE94-6E03-4488-96D0-3952C0DC0F4F} = {B12DEA48-A3D7-4F39-BCF8-5F31C31BB41D}
 	EndGlobalSection
 EndGlobal
