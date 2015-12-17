@@ -13,7 +13,9 @@ namespace SuperBug.Politrange.Crawler
 
             using (var scope = container.BeginLifetimeScope())
             {
+                var crawlerManage = scope.Resolve<CrawlerManage>();
 
+                crawlerManage.InitializationCrawler();;
             }
 
             Console.ReadLine();
