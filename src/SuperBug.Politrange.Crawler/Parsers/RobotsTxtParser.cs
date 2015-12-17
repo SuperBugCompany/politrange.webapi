@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace SuperBug.Politrange.Crawler.Parsers
 {
-    // Константин
+    // Константин - https://github.com/zharinovkv
     public class RobotsTxtParser: IParser
     {
         public IEnumerable<string> GetUrls(string content)
