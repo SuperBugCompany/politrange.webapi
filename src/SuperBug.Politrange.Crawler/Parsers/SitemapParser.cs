@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace SuperBug.Politrange.Crawler.Parsers
 {
-    // Константин
+    // Константин - https://github.com/zharinovkv
     public class SitemapParser: IParser
     {
         public IEnumerable<string> GetUrls(string content)
