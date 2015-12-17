@@ -7,7 +7,7 @@ using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Data.Repositories
 {
-    internal class PageRepository: IPageRepository
+    public class PageRepository: IPageRepository
     {
         private readonly PolitrangeContext context;
 
@@ -67,6 +67,19 @@ namespace SuperBug.Politrange.Data.Repositories
         public IEnumerable<Page> GetMany(Func<Page, bool> where)
         {
             return context.Pages.Where(where);
+        }
+
+        public void Insert(IEnumerable<Page> pages)
+        {
+            context.Sites.Attach(pages.First().Site);
+
+            foreach (Page page in pages)
+            {
+                
+                context.Pages.Add(page);
+            }
+
+            context.SaveChanges();
         }
     }
 }

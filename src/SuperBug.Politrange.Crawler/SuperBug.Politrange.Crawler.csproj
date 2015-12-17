@@ -59,6 +59,14 @@
       <HintPath>..\..\lib\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\..\lib\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
@@ -78,6 +86,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,11 +97,20 @@
   <ItemGroup>
     <Compile Include="AutofacConfiguration.cs" />
     <Compile Include="AutofacContainer.cs" />
+    <Compile Include="CrawlerManage.cs" />
+    <Compile Include="CrawlerPersonRankService.cs" />
     <Compile Include="Downloaders\Downloader.cs" />
+    <Compile Include="DownloadService.cs" />
     <Compile Include="FileSystem\GzipFile.cs" />
     <Compile Include="FileSystem\ConvertFileToString.cs" />
+    <Compile Include="CrawlerProcessing.cs" />
+    <Compile Include="Parsers\IParser.cs" />
+    <Compile Include="Parsers\RobotsTxtParser.cs" />
+    <Compile Include="Parsers\SitemapParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorageService.cs" />
+    <Compile Include="UrlService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

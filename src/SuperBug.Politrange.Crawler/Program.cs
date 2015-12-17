@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Autofac;
-using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Crawler
 {
@@ -13,7 +11,10 @@ namespace SuperBug.Politrange.Crawler
 
             using (var scope = container.BeginLifetimeScope())
             {
+                var crawlerManage = scope.Resolve<CrawlerManage>();
 
+                crawlerManage.InitializationCrawler();
+                ;
             }
 
             Console.ReadLine();
