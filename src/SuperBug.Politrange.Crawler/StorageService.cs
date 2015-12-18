@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SuperBug.Politrange.Data.Repositories;
 using SuperBug.Politrange.Models;
@@ -33,6 +34,11 @@ namespace SuperBug.Politrange.Crawler
         {
             return pageRepository.GetMany(x => x.SiteId == siteId && x.LastScanDate == null).ToList();
         }
+
+        public IEnumerable<Page> GetManyPages(Func<Page, bool> where)
+        {
+            return pageRepository.GetMany(where);
+        } 
 
         public void UpdatePages(IEnumerable<Page> pages)
         {
