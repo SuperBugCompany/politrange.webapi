@@ -31,7 +31,7 @@ namespace SuperBug.Politrange.Crawler
 
         public IEnumerable<Page> GetPagesbySite(int siteId)
         {
-            return pageRepository.GetMany(x => x.SiteId == siteId).Where(x => x.LastScanDate == null).ToList();
+            return pageRepository.GetMany(x => x.SiteId == siteId && x.LastScanDate == null).ToList();
         }
 
         public void UpdatePages(IEnumerable<Page> pages)
