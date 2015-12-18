@@ -9,40 +9,45 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     public class PageRepository: IPageRepository
     {
-        private readonly PolitrangeContext context;
-
-        public PageRepository(PolitrangeContext context)
-        {
-            this.context = context;
-        }
-
         public IEnumerable<Page> GetAll()
         {
-            return context.Pages.ToList();
+            using (var context = new PolitrangeContext())
+            {
+                return context.Pages.ToList();
+            }
         }
 
         public Page GetById(int id)
         {
-            return context.Pages.Find(id);
+            using (var context = new PolitrangeContext())
+            {
+                return context.Pages.Find(id);
+            }
         }
 
         public Page Add(Page entity)
         {
-            entity = context.Pages.Add(entity);
-            context.SaveChanges();
-            return entity;
+            using (var context = new PolitrangeContext())
+            {
+                entity = context.Pages.Add(entity);
+                context.SaveChanges();
+                return entity;
+            }
         }
 
         public bool Update(Page entity)
         {
             bool isUpdated = false;
 
-            context.Pages.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
-
-            if (context.SaveChanges() > 0)
+            using (var context = new PolitrangeContext())
             {
-                isUpdated = true;
+                context.Pages.Attach(entity);
+                context.Entry(entity).State = EntityState.Modified;
+
+                if (context.SaveChanges() > 0)
+                {
+                    isUpdated = true;
+                }
             }
 
             return isUpdated;
@@ -52,13 +57,15 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             bool isDeleted = false;
 
-            var page = GetById(id);
-
-            if (page != null)
+            using (var context = new PolitrangeContext())
             {
-                context.Pages.Remove(page);
-                context.SaveChanges();
-                isDeleted = true;
+                var page = context.Pages.Find(id);
+                if (page != null)
+                {
+                    context.Pages.Remove(page);
+                    context.SaveChanges();
+                    isDeleted = true;
+                }
             }
 
             return isDeleted;
@@ -66,20 +73,25 @@ namespace SuperBug.Politrange.Data.Repositories
 
         public IEnumerable<Page> GetMany(Func<Page, bool> where)
         {
-            return context.Pages.Where(where);
+            using (var context = new PolitrangeContext())
+            {
+                return context.Pages.Where(where).ToList();
+            }
         }
 
         public void Insert(IEnumerable<Page> pages)
         {
-            context.Sites.Attach(pages.First().Site);
-
-            foreach (Page page in pages)
+            using (var context = new PolitrangeContext())
             {
-                
-                context.Pages.Add(page);
-            }
+                context.Sites.Attach(pages.First().Site);
 
-            context.SaveChanges();
+                foreach (Page page in pages)
+                {
+                    context.Pages.Add(page);
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }
