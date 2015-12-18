@@ -22,8 +22,7 @@ namespace SuperBug.Politrange.Data.Repositories
             using (var context = new PolitrangeContext())
             {
                 return
-                    context.PersonPageRanks.Where(x => x.Page.SiteId == siteId)
-                           .Where(d => (d.Page.FoundDate >= beginDate && d.Page.FoundDate <= endDate))
+                    context.PersonPageRanks.Where(x => x.Page.SiteId == siteId && (x.Page.FoundDate >= beginDate && x.Page.FoundDate <= endDate))
                            .Include(p => p.Person);
             }
         }
