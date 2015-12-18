@@ -80,18 +80,30 @@ namespace SuperBug.Politrange.Data.Repositories
             }
         }
 
-        public void Insert(IEnumerable<Page> pages)
+        public void Insert(IEnumerable<Page> entities)
         {
-            using (var context = new PolitrangeContext())
+            int size = 100;
+
+            int count = entities.Count();
+
+            int countPaginate = Convert.ToInt32(count / size) + 1;
+
+            for (int i = 0; i < countPaginate; i++)
             {
-                context.Sites.Attach(pages.First().Site);
+                IEnumerable<Page> pages = entities.Skip(i * size).Take(size);
 
-                foreach (Page page in pages)
+                using (var context = new PolitrangeContext())
                 {
-                    context.Pages.Add(page);
-                }
+                    context.Configuration.AutoDetectChangesEnabled = false;
 
-                context.SaveChanges();
+                    foreach (Page page in pages)
+                    {
+                        context.Sites.Attach(page.Site);
+                        context.Pages.Add(page);
+                    }
+
+                    context.SaveChanges();
+                }
             }
         }
     }
