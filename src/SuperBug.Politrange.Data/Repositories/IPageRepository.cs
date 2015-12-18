@@ -8,6 +8,6 @@ namespace SuperBug.Politrange.Data.Repositories
     public interface IPageRepository: IRepository<Page>
     {
         IEnumerable<Page> GetMany(Func<Page, bool> where);
-        void Insert(IEnumerable<Page> pages);
+        void Insert(IEnumerable<Page> entities);
     }
 }
