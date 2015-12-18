@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Models;
@@ -29,7 +28,10 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
+                var person = context.Persons.Find(entity.PersonId);
+                entity.Person = person;
                 entity = context.Keywords.Add(entity);
+
                 context.SaveChanges();
                 return entity;
             }
@@ -41,8 +43,9 @@ namespace SuperBug.Politrange.Data.Repositories
 
             using (var context = new PolitrangeContext())
             {
-                context.Keywords.Attach(entity);
-                context.Entry(entity).State = EntityState.Modified;
+                var keyword = context.Keywords.Find(entity.KeywordId);
+                keyword.Name = entity.Name;
+
                 if (context.SaveChanges() > 0)
                 {
                     isUpdated = true;
