@@ -8,41 +8,46 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     public class SiteRepository: ISiteRepository
     {
-        private readonly PolitrangeContext context;
-
-        public SiteRepository(PolitrangeContext context)
-        {
-            this.context = context;
-        }
-
         public IEnumerable<Site> GetAll()
         {
-            return context.Sites.ToList();
+            using (var context = new PolitrangeContext())
+            {
+                return context.Sites.ToList();
+            }
         }
 
         public Site GetById(int id)
         {
-            return context.Sites.Find(id);
+            using (var context = new PolitrangeContext())
+            {
+                return context.Sites.Find(id);
+            }
         }
 
         public Site Add(Site entity)
         {
-            entity = context.Sites.Add(entity);
-            context.SaveChanges();
+            using (var context = new PolitrangeContext())
+            {
+                entity = context.Sites.Add(entity);
+                context.SaveChanges();
 
-            return entity;
+                return entity;
+            }
         }
 
         public bool Update(Site entity)
         {
             bool isUpdated = false;
 
-            context.Sites.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
-
-            if (context.SaveChanges() > 0)
+            using (var context = new PolitrangeContext())
             {
-                isUpdated = true;
+                context.Sites.Attach(entity);
+                context.Entry(entity).State = EntityState.Modified;
+
+                if (context.SaveChanges() > 0)
+                {
+                    isUpdated = true;
+                }
             }
 
             return isUpdated;
@@ -52,14 +57,17 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             bool isDeleted = false;
 
-            var site = GetById(id);
-
-            if (site != null)
+            using (var context = new PolitrangeContext())
             {
-                context.Sites.Remove(site);
-                context.SaveChanges();
+                var site = context.Sites.Find(id);
 
-                isDeleted = true;
+                if (site != null)
+                {
+                    context.Sites.Remove(site);
+                    context.SaveChanges();
+
+                    isDeleted = true;
+                }
             }
 
             return isDeleted;
