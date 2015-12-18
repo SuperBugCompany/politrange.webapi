@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac.Extras.NLog;
-using SuperBug.Politrange.Data.Repositories;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Crawler
@@ -11,7 +10,6 @@ namespace SuperBug.Politrange.Crawler
     {
         private readonly ICrawlerPersonRankService crawlerPersonRankService;
         private readonly IDownloadService downloadService;
-        private readonly IPersonPageRankRepository personPageRankRepository;
         private readonly ILogger logger;
         private readonly IStorageService storageService;
         private readonly IUrlService urlService;
@@ -23,14 +21,12 @@ namespace SuperBug.Politrange.Crawler
             IDownloadService downloadService,
             IUrlService urlService,
             ICrawlerPersonRankService crawlerPersonRankService,
-            IPersonPageRankRepository personPageRankRepository,
             ILogger logger)
         {
             this.storageService = storageService;
             this.downloadService = downloadService;
             this.urlService = urlService;
             this.crawlerPersonRankService = crawlerPersonRankService;
-            this.personPageRankRepository = personPageRankRepository;
             this.logger = logger;
         }
 
@@ -66,7 +62,7 @@ namespace SuperBug.Politrange.Crawler
 
             logger.Info("Insert DB");
             // Сохранить результаты в БД
-            personPageRankRepository.Insert(personPageRanks);
+            AddPersonPageRankInStorage(personPageRanks);
         }
 
         private IEnumerable<Page> FetchingPages(int siteId)
@@ -117,6 +113,11 @@ namespace SuperBug.Politrange.Crawler
             var takePages = pages.Take(50);
 
             storageService.InsertPages(takePages);
+        }
+
+        private void AddPersonPageRankInStorage(IEnumerable<PersonPageRank> personPageRanks)
+        {
+            storageService.InsertPersonPageRanks(personPageRanks);
         }
 
         private IEnumerable<PersonPageRank> DetectingKeywords(IDictionary<Page, string> downloadPages)
