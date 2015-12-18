@@ -29,6 +29,7 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
+                context.Sites.Attach(entity.Site);
                 entity = context.Pages.Add(entity);
                 context.SaveChanges();
                 return entity;
