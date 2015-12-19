@@ -18,7 +18,7 @@ namespace SuperBug.Politrange.Crawler
             this.logger = logger;
         }
 
-        public void InitializationCrawler()
+        public void InitializeCrawler()
         {
             logger.Info("Crawler initialize");
 
