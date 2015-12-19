@@ -18,8 +18,7 @@ namespace SuperBug.Politrange.Service.UnitTest
         public PersonServiceTest(ITestOutputHelper output)
         {
             this.output = output;
-            PolitrangeContext context = new PolitrangeContext();
-            IPersonRepository personRepository = new PersonRepository(context);
+            IPersonRepository personRepository = new PersonRepository();
             keywordRepositoryMock = new Mock<IKeywordRepository>();
             personService = new PersonService(personRepository, keywordRepositoryMock.Object);
         }
@@ -73,7 +72,7 @@ namespace SuperBug.Politrange.Service.UnitTest
         public void ShouldBeRenamePersonName()
         {
             //arrange
-            var repository = new PersonRepository(new PolitrangeContext());
+            var repository = new PersonRepository();
             int id = 1;
             var person = new Person() {PersonId = id, Name = "Вилка"};
 

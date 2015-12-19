@@ -9,8 +9,6 @@ namespace SuperBug.Politrange.Data
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<PolitrangeContext>().InstancePerRequest();
-
             builder.RegisterAssemblyTypes(Assembly.Load("SuperBug.Politrange.Data"))
                    .Where(t => t.Name.EndsWith("Repository"))
                    .AsImplementedInterfaces()
