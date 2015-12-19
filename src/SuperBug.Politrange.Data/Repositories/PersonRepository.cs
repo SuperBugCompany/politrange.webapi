@@ -12,7 +12,7 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
-                return context.Persons.ToList();
+                return context.Persons.Include(x => x.Keywords).ToList();
             }
         }
 
