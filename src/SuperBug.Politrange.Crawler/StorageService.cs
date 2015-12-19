@@ -68,7 +68,7 @@ namespace SuperBug.Politrange.Crawler
 
         public IEnumerable<Page> GetManyPages(Func<Page, bool> where)
         {
-            return pageRepository.GetManyIncludeSite(where);
+            return pageRepository.GetManyIncludeSite(where).ToList();
         }
 
         public void UpdatePage(Page page)
