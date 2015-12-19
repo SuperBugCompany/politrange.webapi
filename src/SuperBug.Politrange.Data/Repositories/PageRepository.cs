@@ -76,7 +76,7 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
-                return context.Pages.Where(where).ToList();
+                return context.Pages.Where(where);
             }
         }
 
@@ -104,6 +104,14 @@ namespace SuperBug.Politrange.Data.Repositories
 
                     context.SaveChanges();
                 }
+            }
+        }
+
+        public IEnumerable<Page> GetManyIncludeSite(Func<Page, bool> where)
+        {
+            using (var context = new PolitrangeContext())
+            {
+                return context.Pages.Include(x => x.Site).Where(@where);
             }
         }
     }
