@@ -96,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutofacConfiguration.cs" />
-    <Compile Include="AutofacContainer.cs" />
     <Compile Include="CrawlerManage.cs" />
     <Compile Include="CrawlerPersonRankService.cs" />
     <Compile Include="Downloaders\Downloader.cs" />
