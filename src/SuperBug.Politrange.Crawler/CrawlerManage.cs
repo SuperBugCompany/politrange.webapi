@@ -12,23 +12,21 @@ namespace SuperBug.Politrange.Crawler
         private readonly ILogger logger;
         private readonly IStorageService storageService;
 
-        private IEnumerable<Site> sites;
-
         public CrawlerManage(IStorageService storageService, ILogger logger)
         {
             this.storageService = storageService;
             this.logger = logger;
-
-            PopulateSites();
         }
 
         public void InitializationCrawler()
         {
             logger.Info("Crawler initialize");
 
-            var container = AutofacContainer.Get();
+            var container = AutofacConfiguration.BuildAutofacContainer();
 
-            foreach (Site site in sites)
+            IEnumerable<Page> pages = storageService.GetManyPages(x => x.LastScanDate == null);
+
+            foreach (Page page in pages)
             {
                 using (var scope = container.BeginLifetimeScope())
                 {
@@ -39,14 +37,9 @@ namespace SuperBug.Politrange.Crawler
                     scope.Resolve<IUrlService>();
                     var processing = scope.Resolve<CrawlerProcessing>();
 
-                    processing.InitializeProcession(site);
+                    processing.InitializeProcession(page);
                 }
             }
-        }
-
-        private void PopulateSites()
-        {
-            sites = storageService.GetSites() ?? new List<Site>();
         }
     }
 }
