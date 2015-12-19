@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Autofac.Extras.NLog;
 using SuperBug.Politrange.Models;
@@ -56,7 +55,7 @@ namespace SuperBug.Politrange.Crawler
             logger.Info("Creating pages");
             var newPages = CreatePages(currentPage.Site, urls);
 
-            logger.Info("Save new pages in DataBase");
+            logger.Info("Save new pages in Database");
             int countSaved = SavePages(newPages);
 
             logger.Info("Saved pages: " + countSaved);
@@ -67,7 +66,7 @@ namespace SuperBug.Politrange.Crawler
 
             logger.Info("Founded rank persons: " + personPageRanks.Count());
 
-            logger.Info("Insert DB");
+            logger.Info("Save new rank persons in Database");
             // Сохранить результаты в БД
             countSaved = SavePersonRageRankStorage(personPageRanks);
 
@@ -77,9 +76,9 @@ namespace SuperBug.Politrange.Crawler
         private KeyValuePair<Page, string> Download(Page page)
         {
             var content = downloadService.Download(page.Uri);
-            
+
             page.LastScanDate = DateTime.Now;
-            
+
             var downloadPage = new KeyValuePair<Page, string>(page, content);
 
             return downloadPage;
