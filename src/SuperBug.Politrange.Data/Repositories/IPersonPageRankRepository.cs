@@ -6,6 +6,6 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     public interface IPersonPageRankRepository
     {
-        void Insert(IEnumerable<PersonPageRank> entities);
+        int Insert(IEnumerable<PersonPageRank> entities);
     }
 }
