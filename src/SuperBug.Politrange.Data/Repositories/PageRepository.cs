@@ -42,7 +42,8 @@ namespace SuperBug.Politrange.Data.Repositories
 
             using (var context = new PolitrangeContext())
             {
-                context.Pages.Attach(entity);
+                context.Configuration.AutoDetectChangesEnabled = false;
+
                 context.Entry(entity).State = EntityState.Modified;
 
                 if (context.SaveChanges() > 0)
@@ -96,13 +97,9 @@ namespace SuperBug.Politrange.Data.Repositories
 
                 using (var context = new PolitrangeContext())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
+                    context.Sites.Attach(pages.First().Site);
 
-                    foreach (Page page in pages)
-                    {
-                        context.Sites.Attach(page.Site);
-                        context.Pages.Add(page);
-                    }
+                    context.Pages.AddRange(pages);
 
                     countSaved += context.SaveChanges();
                 }
@@ -115,7 +112,7 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
-                return context.Pages.Include(x => x.Site).Where(@where);
+                return context.Pages.Include(x => x.Site).Where(@where).ToList();
             }
         }
     }
