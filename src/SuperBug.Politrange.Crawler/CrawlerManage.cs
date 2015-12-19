@@ -21,7 +21,7 @@ namespace SuperBug.Politrange.Crawler
 
         public void InitializeCrawler()
         {
-            logger.Info("Crawler initialize");
+            logger.Info("Начата работа краулера");
 
             var container = AutofacContainer.GetContainer();
 
@@ -76,6 +76,8 @@ namespace SuperBug.Politrange.Crawler
                     oldPages = new Queue<Page>(pages);
                 }
             }
+
+            logger.Info("Работа краулера завершена");
         }
     }
 }
