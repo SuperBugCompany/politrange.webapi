@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using SuperBug.Politrange.Crawler.Downloaders;
 using SuperBug.Politrange.Crawler.FileSystem;
 
-namespace SuperBug.Politrange.Crawler
+namespace SuperBug.Politrange.Crawler.Services
 {
     public interface IDownloadService
     {

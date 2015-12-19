@@ -95,12 +95,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutofacConfiguration.cs" />
     <Compile Include="AutofacContainer.cs" />
     <Compile Include="CrawlerManage.cs" />
-    <Compile Include="CrawlerPersonRankService.cs" />
     <Compile Include="Downloaders\Downloader.cs" />
-    <Compile Include="DownloadService.cs" />
     <Compile Include="FileSystem\GzipFile.cs" />
     <Compile Include="FileSystem\ConvertFileToString.cs" />
     <Compile Include="CrawlerProcessing.cs" />
@@ -109,8 +106,10 @@
     <Compile Include="Parsers\SitemapParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StorageService.cs" />
-    <Compile Include="UrlService.cs" />
+    <Compile Include="Services\CrawlerPersonRankService.cs" />
+    <Compile Include="Services\DownloadService.cs" />
+    <Compile Include="Services\StorageService.cs" />
+    <Compile Include="Services\UrlService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -132,6 +131,7 @@
       <Name>SuperBug.Politrange.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

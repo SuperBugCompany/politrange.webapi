@@ -3,7 +3,7 @@ using System.IO;
 using SuperBug.Politrange.Crawler.Parsers;
 using SuperBug.Politrange.Models;
 
-namespace SuperBug.Politrange.Crawler
+namespace SuperBug.Politrange.Crawler.Services
 {
     public interface IUrlService
     {
@@ -12,15 +12,9 @@ namespace SuperBug.Politrange.Crawler
 
     public class UrlService: IUrlService
     {
-        public UrlService()
-        {
-        }
-
         public IEnumerable<string> GetUrls(KeyValuePair<Page, string> page)
         {
             IEnumerable<string> urls = new List<string>();
-
-            IParser parser = null;
 
             var ext = Path.GetExtension(page.Key.Uri);
 

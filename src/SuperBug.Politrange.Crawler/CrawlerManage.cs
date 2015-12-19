@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using Autofac.Extras.NLog;
-using SuperBug.Politrange.Data.Repositories;
+using SuperBug.Politrange.Crawler.Services;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Crawler
@@ -19,11 +19,11 @@ namespace SuperBug.Politrange.Crawler
             this.logger = logger;
         }
 
-        public void InitializationCrawler()
+        public void InitializeCrawler()
         {
             logger.Info("Crawler initialize");
 
-            var container = AutofacConfiguration.BuildAutofacContainer();
+            var container = AutofacContainer.GetContainer();
 
             IEnumerable<Page> pages = storageService.GetManyPages(x => x.LastScanDate == null);
 
@@ -37,11 +37,11 @@ namespace SuperBug.Politrange.Crawler
                 {
                     var processing = scope.ResolveOptional<CrawlerProcessing>();
 
-                    logger.Info("Inittialize procesion page: " + page.Uri);
+                    logger.Info("Inittialize procesion new page: " + page.Uri);
 
                     processing.InitializeProcession(page);
 
-                    logger.Info("Completed procession page: " + page.Uri);
+                    logger.Info("Completed procession new page: " + page.Uri);
                 }
 
                 if (!newPages.Any())
@@ -63,11 +63,11 @@ namespace SuperBug.Politrange.Crawler
                 {
                     var processing = scope.ResolveOptional<CrawlerProcessing>();
 
-                    logger.Info("Inittialize procesion page: " + page.Uri);
+                    logger.Info("Inittialize procesion old page: " + page.Uri);
 
                     processing.InitializeProcession(page);
 
-                    logger.Info("Completed procession page: " + page.Uri);
+                    logger.Info("Completed procession old page: " + page.Uri);
                 }
 
                 if (!oldPages.Any())
@@ -76,8 +76,6 @@ namespace SuperBug.Politrange.Crawler
                     oldPages = new Queue<Page>(pages);
                 }
             }
-
-
         }
     }
 }

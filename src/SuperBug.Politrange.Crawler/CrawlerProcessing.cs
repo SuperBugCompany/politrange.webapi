@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac.Extras.NLog;
+using SuperBug.Politrange.Crawler.Services;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Crawler
@@ -32,45 +33,52 @@ namespace SuperBug.Politrange.Crawler
 
         public void InitializeProcession(Page page)
         {
-            this.currentPage = page;
+            currentPage = page;
 
             logger.Info("Current page: " + currentPage.Uri);
 
             logger.Info("Download: " + page.Uri);
-            // Скачать
+
             var downloadPage = Download(page);
 
             logger.Info("Download completed" + page.Uri);
 
             logger.Info("Update current page");
-            // Обновить запись в бд
-            storageService.UpdatePage(page);
+
+            UpdateLastScanDatePage(downloadPage.Key);
 
             logger.Info("Parse urls by " + page.Uri);
-            // Вызвать UrlFinder - найти ссылки на странице, по которым нужно будет еще проходиться
-            var urls = FetchingUrls(downloadPage);
+
+            var urls = FetchingUrlsByPage(downloadPage);
 
             logger.Info("Founded urls: " + urls.Count());
 
             logger.Info("Creating pages");
+
             var newPages = CreatePages(currentPage.Site, urls);
 
             logger.Info("Save new pages in Database");
-            int countSaved = SavePages(newPages);
+
+            int countSaved = SavePagesStorage(newPages);
 
             logger.Info("Saved pages: " + countSaved);
 
             logger.Info("Detecting keywords");
-            // Найти кейворды на странице
+
             var personPageRanks = DetectingKeywords(downloadPage);
 
             logger.Info("Founded rank persons: " + personPageRanks.Count());
 
             logger.Info("Save new rank persons in Database");
-            // Сохранить результаты в БД
+
             countSaved = SavePersonRageRankStorage(personPageRanks);
 
             logger.Info("Saved rank persons: " + countSaved);
+        }
+
+        private void UpdateLastScanDatePage(Page page)
+        {
+            storageService.UpdatePage(page);
         }
 
         private KeyValuePair<Page, string> Download(Page page)
@@ -84,7 +92,7 @@ namespace SuperBug.Politrange.Crawler
             return downloadPage;
         }
 
-        private IEnumerable<string> FetchingUrls(KeyValuePair<Page, string> page)
+        private IEnumerable<string> FetchingUrlsByPage(KeyValuePair<Page, string> page)
         {
             return urlService.GetUrls(page);
         }
@@ -108,7 +116,7 @@ namespace SuperBug.Politrange.Crawler
             return pages;
         }
 
-        private int SavePages(IEnumerable<Page> pages)
+        private int SavePagesStorage(IEnumerable<Page> pages)
         {
             return storageService.InsertPages(pages);
         }
