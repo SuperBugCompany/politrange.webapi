@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.NLog;
 using SuperBug.Politrange.Crawler.Downloaders;
+using SuperBug.Politrange.Crawler.Services;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Data.Repositories;
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac.Extras.NLog;
+using SuperBug.Politrange.Crawler.Services;
 using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Crawler

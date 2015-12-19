@@ -2,7 +2,7 @@
 using SuperBug.Politrange.Crawler.Downloaders;
 using SuperBug.Politrange.Crawler.FileSystem;
 
-namespace SuperBug.Politrange.Crawler
+namespace SuperBug.Politrange.Crawler.Services
 {
     public interface IDownloadService
     {

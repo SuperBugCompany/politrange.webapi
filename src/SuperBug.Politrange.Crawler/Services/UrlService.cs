@@ -3,7 +3,7 @@ using System.IO;
 using SuperBug.Politrange.Crawler.Parsers;
 using SuperBug.Politrange.Models;
 
-namespace SuperBug.Politrange.Crawler
+namespace SuperBug.Politrange.Crawler.Services
 {
     public interface IUrlService
     {
