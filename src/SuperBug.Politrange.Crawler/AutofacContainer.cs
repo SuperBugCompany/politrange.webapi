@@ -6,9 +6,9 @@ using SuperBug.Politrange.Data.Repositories;
 
 namespace SuperBug.Politrange.Crawler
 {
-    public class AutofacConfiguration
+    public class AutofacContainer
     {
-        public static IContainer BuildAutofacContainer()
+        public static IContainer GetContainer()
         {
             var builder = new ContainerBuilder();
             
