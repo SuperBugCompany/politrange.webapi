@@ -25,13 +25,11 @@ namespace SuperBug.Politrange.Data.Repositories
 
                 using (var context = new PolitrangeContext())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
-
                     foreach (PersonPageRank rank in ranks)
                     {
                         context.Pages.Attach(rank.Page);
                         context.Persons.Attach(rank.Person);
-                        context.PersonPageRanks.AddOrUpdate(rank);
+                        context.PersonPageRanks.Add(rank);
                     }
                     countSaved += context.SaveChanges();
                 }
