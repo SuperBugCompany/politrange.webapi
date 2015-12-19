@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using SuperBug.Politrange.Crawler.Downloaders;
 using SuperBug.Politrange.Crawler.FileSystem;
 
