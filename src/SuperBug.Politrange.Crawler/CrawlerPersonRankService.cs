@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using HtmlAgilityPack;
+using NLog;
 using SuperBug.Politrange.Data.Repositories;
 using SuperBug.Politrange.Models;
 
@@ -14,47 +16,49 @@ namespace SuperBug.Politrange.Crawler
 
     public class CrawlerPersonRankService: ICrawlerPersonRankService
     {
+        private readonly ILogger logger;
         private readonly IPersonRepository personRepository;
 
-        public CrawlerPersonRankService(IPersonRepository personRepository)
+        public CrawlerPersonRankService(IPersonRepository personRepository, ILogger logger)
         {
             this.personRepository = personRepository;
+            this.logger = logger;
         }
 
         public IEnumerable<PersonPageRank> GetPersonPageRanks(KeyValuePair<Page, string> page)
         {
             IList<PersonPageRank> ranks = new List<PersonPageRank>();
 
-            if (page.Key == null
-                || string.IsNullOrEmpty(page.Value)
-                || IsExtensionUrl(page.Key.Uri))
+            try
             {
-                return ranks;
-            }
+                HtmlDocument htmlDocument = new HtmlDocument();
 
-            HtmlDocument htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(page.Value);
 
-            htmlDocument.LoadHtml(page.Value);
+                var nodes = htmlDocument.DocumentNode.SelectNodes("//p");
 
-            var nodes = htmlDocument.DocumentNode.SelectNodes("//p");
+                var persons = GetPersons();
 
-            var persons = GetPersons();
+                var text = string.Empty;
 
-            var text = string.Empty;
-
-            foreach (Person person in persons)
-            {
-                foreach (Keyword keyword in person.Keywords)
+                foreach (Person person in persons)
                 {
-                    foreach (HtmlNode node in nodes)
+                    foreach (Keyword keyword in person.Keywords)
                     {
-                        text = node.InnerText;
-                        if (text.Contains(keyword.Name))
+                        foreach (HtmlNode node in nodes)
                         {
-                            AddOrUpdateRank(ranks, page.Key, person);
+                            text = node.InnerText;
+                            if (text.Contains(keyword.Name))
+                            {
+                                AddOrUpdateRank(ranks, page.Key, person);
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
             }
 
             return ranks;
@@ -67,7 +71,7 @@ namespace SuperBug.Politrange.Crawler
 
         private void AddOrUpdateRank(IList<PersonPageRank> ranks, Page page, Person person)
         {
-            var rank = ranks.SingleOrDefault(x => x.Page.PageId == page.PageId && x.Person.PersonId == person.PersonId);
+            var rank = ranks.SingleOrDefault(x => x.Person.PersonId == person.PersonId);
 
             if (rank == null)
             {
