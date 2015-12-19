@@ -12,10 +12,6 @@ namespace SuperBug.Politrange.Crawler
 
     public class UrlService: IUrlService
     {
-        public UrlService()
-        {
-        }
-
         public IEnumerable<string> GetUrls(KeyValuePair<Page, string> page)
         {
             IEnumerable<string> urls = new List<string>();
