@@ -80,13 +80,15 @@ namespace SuperBug.Politrange.Data.Repositories
             }
         }
 
-        public void Insert(IEnumerable<Page> entities)
+        public int Insert(IEnumerable<Page> entities)
         {
-            int size = 100;
-
+            const int size = 100;
+            
             int count = entities.Count();
 
             int countPaginate = Convert.ToInt32(count / size) + 1;
+
+            int countSaved = 0;
 
             for (int i = 0; i < countPaginate; i++)
             {
@@ -102,9 +104,11 @@ namespace SuperBug.Politrange.Data.Repositories
                         context.Pages.Add(page);
                     }
 
-                    context.SaveChanges();
+                    countSaved += context.SaveChanges();
                 }
             }
+
+            return countSaved;
         }
 
         public IEnumerable<Page> GetManyIncludeSite(Func<Page, bool> where)
