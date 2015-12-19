@@ -10,9 +10,10 @@ namespace SuperBug.Politrange.Crawler
     {
         IEnumerable<Site> GetSites();
         IEnumerable<Page> GetPagesbySite(int siteId);
-        void UpdatePages(IEnumerable<Page> pages);
-        void InsertPages(IEnumerable<Page> pages);
-        void InsertPersonPageRanks(IEnumerable<PersonPageRank> personPageRanks);
+        void UpdatePage(Page page);
+        int InsertPages(IEnumerable<Page> pages);
+        int InsertRanks(IEnumerable<PersonPageRank> personPageRanks);
+        IEnumerable<Page> GetManyPages(Func<Page, bool> where);
     }
 
     public class StorageService: IStorageService
@@ -41,33 +42,38 @@ namespace SuperBug.Politrange.Crawler
             return pageRepository.GetMany(x => x.SiteId == siteId && x.LastScanDate == null).ToList();
         }
 
-        public void UpdatePages(IEnumerable<Page> pages)
+        public int InsertPages(IEnumerable<Page> pages)
         {
-            foreach (Page page in pages)
-            {
-                pageRepository.Update(page);
-            }
-        }
+            int countSaved = 0;
 
-        public void InsertPages(IEnumerable<Page> pages)
-        {
             if (pages.Any())
             {
-                pageRepository.Insert(pages);
+                countSaved = pageRepository.Insert(pages);
             }
+
+            return countSaved;
         }
 
-        public void InsertPersonPageRanks(IEnumerable<PersonPageRank> personPageRanks)
+        public int InsertRanks(IEnumerable<PersonPageRank> personPageRanks)
         {
+            int countSaved = 0;
+
             if (personPageRanks.Any())
             {
-                personPageRankRepository.Insert(personPageRanks);
+                countSaved = personPageRankRepository.Insert(personPageRanks);
             }
+
+            return countSaved;
         }
 
         public IEnumerable<Page> GetManyPages(Func<Page, bool> where)
         {
-            return pageRepository.GetMany(where);
+            return pageRepository.GetManyIncludeSite(where);
+        }
+
+        public void UpdatePage(Page page)
+        {
+            pageRepository.Update(page);
         }
     }
 }
