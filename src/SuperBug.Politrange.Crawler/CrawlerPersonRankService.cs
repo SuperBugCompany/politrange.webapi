@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Autofac.Extras.NLog;
 using HtmlAgilityPack;
-using NLog;
 using SuperBug.Politrange.Data.Repositories;
 using SuperBug.Politrange.Models;
 
