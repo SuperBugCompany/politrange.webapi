@@ -37,20 +37,23 @@ namespace SuperBug.Politrange.Crawler.Services
 
                 var nodes = htmlDocument.DocumentNode.SelectNodes("//p");
 
-                var persons = GetPersons();
-
-                var text = string.Empty;
-
-                foreach (Person person in persons)
+                if (nodes != null)
                 {
-                    foreach (Keyword keyword in person.Keywords)
+                    var persons = GetPersons();
+
+                    var text = string.Empty;
+
+                    foreach (Person person in persons)
                     {
-                        foreach (HtmlNode node in nodes)
+                        foreach (Keyword keyword in person.Keywords)
                         {
-                            text = node.InnerText;
-                            if (text.Contains(keyword.Name))
+                            foreach (HtmlNode node in nodes)
                             {
-                                AddOrUpdateRank(ranks, page.Key, person);
+                                text = node.InnerText;
+                                if (text.Contains(keyword.Name))
+                                {
+                                    AddOrUpdateRank(ranks, page.Key, person);
+                                }
                             }
                         }
                     }
