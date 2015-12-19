@@ -42,7 +42,8 @@ namespace SuperBug.Politrange.Data.Repositories
 
             using (var context = new PolitrangeContext())
             {
-                context.Pages.Attach(entity);
+                context.Configuration.AutoDetectChangesEnabled = false;
+
                 context.Entry(entity).State = EntityState.Modified;
 
                 if (context.SaveChanges() > 0)
@@ -76,17 +77,19 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
-                return context.Pages.Where(where).ToList();
+                return context.Pages.Where(where);
             }
         }
 
-        public void Insert(IEnumerable<Page> entities)
+        public int Insert(IEnumerable<Page> entities)
         {
-            int size = 100;
-
+            const int size = 100;
+            
             int count = entities.Count();
 
             int countPaginate = Convert.ToInt32(count / size) + 1;
+
+            int countSaved = 0;
 
             for (int i = 0; i < countPaginate; i++)
             {
@@ -94,16 +97,22 @@ namespace SuperBug.Politrange.Data.Repositories
 
                 using (var context = new PolitrangeContext())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
+                    context.Sites.Attach(pages.First().Site);
 
-                    foreach (Page page in pages)
-                    {
-                        context.Sites.Attach(page.Site);
-                        context.Pages.Add(page);
-                    }
+                    context.Pages.AddRange(pages);
 
-                    context.SaveChanges();
+                    countSaved += context.SaveChanges();
                 }
+            }
+
+            return countSaved;
+        }
+
+        public IEnumerable<Page> GetManyIncludeSite(Func<Page, bool> where)
+        {
+            using (var context = new PolitrangeContext())
+            {
+                return context.Pages.Include(x => x.Site).Where(@where).ToList();
             }
         }
     }

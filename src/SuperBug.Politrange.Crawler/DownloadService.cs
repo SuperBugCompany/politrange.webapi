@@ -19,19 +19,6 @@ namespace SuperBug.Politrange.Crawler
             this.downloader = downloader;
         }
 
-        public IDictionary<string, string> DownloadAll(IEnumerable<string> urls)
-        {
-            IDictionary<string, string> pages = new Dictionary<string, string>();
-
-            foreach (string url in urls)
-            {
-                var content = Download(url);
-                pages.Add(url, content);
-            }
-
-            return pages;
-        }
-
         public string Download(string url)
         {
             var content = string.Empty;

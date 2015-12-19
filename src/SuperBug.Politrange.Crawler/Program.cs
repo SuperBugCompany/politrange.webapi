@@ -7,6 +7,9 @@ namespace SuperBug.Politrange.Crawler
     {
         private static void Main(string[] args)
         {
+            Console.WindowWidth = 120;
+            Console.BufferWidth = 120;
+
             var container = AutofacContainer.Get();
 
             using (var scope = container.BeginLifetimeScope())
