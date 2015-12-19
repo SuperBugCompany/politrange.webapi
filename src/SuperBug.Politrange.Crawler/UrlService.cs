@@ -20,8 +20,6 @@ namespace SuperBug.Politrange.Crawler
         {
             IEnumerable<string> urls = new List<string>();
 
-            IParser parser = null;
-
             var ext = Path.GetExtension(page.Key.Uri);
 
             switch (ext)
