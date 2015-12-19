@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Autofac.Extras.NLog;
 using SuperBug.Politrange.Models;
@@ -14,7 +15,7 @@ namespace SuperBug.Politrange.Crawler
         private readonly IStorageService storageService;
         private readonly IUrlService urlService;
 
-        private Site currentSite;
+        private Page currentPage;
 
         public CrawlerProcessing(
             IStorageService storageService,
@@ -30,68 +31,68 @@ namespace SuperBug.Politrange.Crawler
             this.logger = logger;
         }
 
-        public void InitializeProcession(Site site)
+        public void InitializeProcession(Page page)
         {
-            this.currentSite = site;
+            this.currentPage = page;
 
-            logger.Info("FetchingPages()");
-            // Селектнуть ссылку из таблицы Pages, по которой никогда не обходили
-            var pages = FetchingPages(currentSite.SiteId);
+            logger.Info("Current page: " + currentPage.Uri);
 
-            logger.Info("DownloadAll()");
+            logger.Info("Download: " + page.Uri);
             // Скачать
-            var downloadPages = DownloadAll(pages);
+            var downloadPage = Download(page);
 
-            logger.Info("Update DB");
+            logger.Info("Download completed" + page.Uri);
+
+            logger.Info("Update current page");
             // Обновить запись в бд
-            storageService.UpdatePages(pages);
+            storageService.UpdatePage(page);
 
-            logger.Info("FetchingUrls()");
+            logger.Info("Parse urls by " + page.Uri);
             // Вызвать UrlFinder - найти ссылки на странице, по которым нужно будет еще проходиться
-            var urls = FetchingUrls(downloadPages);
+            var urls = FetchingUrls(downloadPage);
 
-            logger.Info("BuildPages()");
-            var newPages = BuildPages(currentSite, urls);
+            logger.Info("Founded urls: " + urls.Count());
 
-            logger.Info("AddPagesInStorage()");
-            AddPagesInStorage(newPages);
+            logger.Info("Creating pages");
+            var newPages = CreatePages(currentPage.Site, urls);
 
-            logger.Info("DetectingKeywords()");
+            logger.Info("Save new pages in DataBase");
+            int countSaved = SavePages(newPages);
+
+            logger.Info("Saved pages: " + countSaved);
+
+            logger.Info("Detecting keywords");
             // Найти кейворды на странице
-            var personPageRanks = DetectingKeywords(downloadPages);
+            var personPageRanks = DetectingKeywords(downloadPage);
+
+            logger.Info("Founded rank persons: " + personPageRanks.Count());
 
             logger.Info("Insert DB");
             // Сохранить результаты в БД
-            AddPersonPageRankInStorage(personPageRanks);
+            countSaved = SavePersonRageRankStorage(personPageRanks);
+
+            logger.Info("Saved rank persons: " + countSaved);
         }
 
-        private IEnumerable<Page> FetchingPages(int siteId)
+        private KeyValuePair<Page, string> Download(Page page)
         {
-            return storageService.GetPagesbySite(siteId);
+            var content = downloadService.Download(page.Uri);
+            
+            page.LastScanDate = DateTime.Now;
+            
+            var downloadPage = new KeyValuePair<Page, string>(page, content);
+
+            return downloadPage;
         }
 
-        private IDictionary<Page, string> DownloadAll(IEnumerable<Page> pages)
+        private IEnumerable<string> FetchingUrls(KeyValuePair<Page, string> page)
         {
-            IDictionary<Page, string> downloadPages = new Dictionary<Page, string>();
-
-            foreach (Page page in pages)
-            {
-                var content = downloadService.Download(page.Uri);
-                page.LastScanDate = DateTime.Now;
-                downloadPages.Add(page, content);
-            }
-
-            return downloadPages;
+            return urlService.GetUrls(page);
         }
 
-        private IEnumerable<string> FetchingUrls(IDictionary<Page, string> pages)
+        private IEnumerable<Page> CreatePages(Site site, IEnumerable<string> urls)
         {
-            return urlService.GetAllUrls(pages);
-        }
-
-        private IEnumerable<Page> BuildPages(Site site, IEnumerable<string> urls)
-        {
-            IList<Page> pages = new List<Page>();
+            ICollection<Page> pages = new List<Page>();
 
             foreach (string url in urls)
             {
@@ -108,27 +109,23 @@ namespace SuperBug.Politrange.Crawler
             return pages;
         }
 
-        private void AddPagesInStorage(IEnumerable<Page> pages)
+        private int SavePages(IEnumerable<Page> pages)
         {
-            var takePages = pages.Take(50);
-
-            storageService.InsertPages(takePages);
+            return storageService.InsertPages(pages);
         }
 
-        private void AddPersonPageRankInStorage(IEnumerable<PersonPageRank> personPageRanks)
+        private int SavePersonRageRankStorage(IEnumerable<PersonPageRank> ranks)
         {
-            storageService.InsertPersonPageRanks(personPageRanks);
+            return storageService.InsertRanks(ranks);
         }
 
-        private IEnumerable<PersonPageRank> DetectingKeywords(IDictionary<Page, string> downloadPages)
+        private IEnumerable<PersonPageRank> DetectingKeywords(KeyValuePair<Page, string> downloadPage)
         {
             List<PersonPageRank> personPageRanks = new List<PersonPageRank>();
 
-            foreach (KeyValuePair<Page, string> page in downloadPages)
-            {
-                var ranks = crawlerPersonRankService.GetPersonPageRanks(page);
-                personPageRanks.AddRange(ranks);
-            }
+            var ranks = crawlerPersonRankService.GetPersonPageRanks(downloadPage);
+
+            personPageRanks.AddRange(ranks);
 
             return personPageRanks;
         }
