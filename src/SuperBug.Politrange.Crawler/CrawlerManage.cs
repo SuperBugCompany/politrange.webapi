@@ -22,7 +22,7 @@ namespace SuperBug.Politrange.Crawler
         {
             logger.Info("Crawler initialize");
 
-            var container = AutofacConfiguration.BuildAutofacContainer();
+            var container = AutofacContainer.GetContainer();
 
             IEnumerable<Page> pages = storageService.GetManyPages(x => x.LastScanDate == null);
 
