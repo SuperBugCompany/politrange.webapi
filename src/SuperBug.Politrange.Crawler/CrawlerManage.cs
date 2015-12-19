@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using Autofac.Extras.NLog;
 using SuperBug.Politrange.Data.Repositories;
@@ -26,8 +27,12 @@ namespace SuperBug.Politrange.Crawler
 
             IEnumerable<Page> pages = storageService.GetManyPages(x => x.LastScanDate == null);
 
-            foreach (Page page in pages)
+            Queue<Page> newPages = new Queue<Page>(pages);
+
+            while (newPages.Any())
             {
+                var page = newPages.Dequeue();
+
                 using (var scope = container.BeginLifetimeScope())
                 {
                     var processing = scope.ResolveOptional<CrawlerProcessing>();
@@ -38,7 +43,41 @@ namespace SuperBug.Politrange.Crawler
 
                     logger.Info("Completed procession page: " + page.Uri);
                 }
+
+                if (!newPages.Any())
+                {
+                    pages = storageService.GetManyPages(x => x.LastScanDate == null);
+                    newPages = new Queue<Page>(pages);
+                }
             }
+
+            pages = storageService.GetManyPages(x => x.LastScanDate < DateTime.Today.AddDays(-1));
+
+            Queue<Page> oldPages = new Queue<Page>(pages);
+
+            while (oldPages.Any())
+            {
+                var page = newPages.Dequeue();
+
+                using (var scope = container.BeginLifetimeScope())
+                {
+                    var processing = scope.ResolveOptional<CrawlerProcessing>();
+
+                    logger.Info("Inittialize procesion page: " + page.Uri);
+
+                    processing.InitializeProcession(page);
+
+                    logger.Info("Completed procession page: " + page.Uri);
+                }
+
+                if (!oldPages.Any())
+                {
+                    pages = storageService.GetManyPages(x => x.LastScanDate == null);
+                    oldPages = new Queue<Page>(pages);
+                }
+            }
+
+
         }
     }
 }
