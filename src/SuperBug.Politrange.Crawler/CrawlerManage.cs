@@ -30,14 +30,13 @@ namespace SuperBug.Politrange.Crawler
             {
                 using (var scope = container.BeginLifetimeScope())
                 {
-                    scope.Resolve<ICrawlerPersonRankService>();
-                    scope.Resolve<IDownloadService>();
-                    scope.Resolve<IPersonPageRankRepository>();
-                    scope.Resolve<IStorageService>();
-                    scope.Resolve<IUrlService>();
-                    var processing = scope.Resolve<CrawlerProcessing>();
+                    var processing = scope.ResolveOptional<CrawlerProcessing>();
+
+                    logger.Info("Inittialize procesion page: " + page.Uri);
 
                     processing.InitializeProcession(page);
+
+                    logger.Info("Completed procession page: " + page.Uri);
                 }
             }
         }
