@@ -7,25 +7,13 @@ namespace SuperBug.Politrange.Crawler
 {
     public interface IUrlService
     {
-        IEnumerable<string> GetAllUrls(IDictionary<Page, string> pages);
+        IEnumerable<string> GetUrls(KeyValuePair<Page, string> page);
     }
 
     public class UrlService: IUrlService
     {
         public UrlService()
         {
-        }
-
-        public IEnumerable<string> GetAllUrls(IDictionary<Page, string> pages)
-        {
-            List<string> urls = new List<string>();
-
-            foreach (KeyValuePair<Page, string> page in pages)
-            {
-                urls.AddRange(GetUrls(page));
-            }
-
-            return urls;
         }
 
         public IEnumerable<string> GetUrls(KeyValuePair<Page, string> page)
