@@ -112,7 +112,7 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
-                return context.Pages.Include(x => x.Site).Where(@where).ToList();
+                return context.Pages.Include(x => x.Site).Where(@where).Take(100).ToList();
             }
         }
     }
