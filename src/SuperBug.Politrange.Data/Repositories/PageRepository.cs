@@ -77,7 +77,7 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
-                return context.Pages.Where(where);
+                return context.Pages.Where(where).ToList();
             }
         }
 
