@@ -23,7 +23,7 @@ namespace SuperBug.Politrange.Data.Repositories
             {
                 return
                     context.PersonPageRanks.Where(x => x.Page.SiteId == siteId && (x.Page.FoundDate >= beginDate && x.Page.FoundDate <= endDate))
-                           .Include(p => p.Person).ToList();
+                           .Include(p => p.Person).Include(x=>x.Page).ToList();
             }
         }
     }
