@@ -30,7 +30,11 @@ namespace SuperBug.Politrange.Crawler
 
         public void InitializeCrawler()
         {
+            ProcessingCrawler();
+
             this.timer.Elapsed += TimerOnElapsed;
+
+            this.timer.Start();
         }
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
