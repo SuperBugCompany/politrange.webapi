@@ -84,7 +84,7 @@ namespace SuperBug.Politrange.Data.Repositories
         public int Insert(IEnumerable<Page> entities)
         {
             const int size = 100;
-            
+
             int count = entities.Count();
 
             int countPaginate = Convert.ToInt32(count / size) + 1;
@@ -99,7 +99,15 @@ namespace SuperBug.Politrange.Data.Repositories
                 {
                     context.Sites.Attach(pages.First().Site);
 
-                    context.Pages.AddRange(pages);
+                    foreach (Page page in pages)
+                    {
+                        var existPage = context.Pages.SingleOrDefault(x => x.Uri.Contains(page.Uri));
+
+                        if (existPage == null)
+                        {
+                            context.Pages.Add(page);
+                        }
+                    }
 
                     countSaved += context.SaveChanges();
                 }
@@ -112,7 +120,7 @@ namespace SuperBug.Politrange.Data.Repositories
         {
             using (var context = new PolitrangeContext())
             {
-                return context.Pages.Include(x => x.Site).Where(@where).ToList();
+                return context.Pages.Include(x => x.Site).Where(@where).Take(100).ToList();
             }
         }
     }

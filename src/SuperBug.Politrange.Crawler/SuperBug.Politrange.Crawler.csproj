@@ -101,6 +101,7 @@
     <Compile Include="FileSystem\GzipFile.cs" />
     <Compile Include="FileSystem\ConvertFileToString.cs" />
     <Compile Include="CrawlerProcessing.cs" />
+    <Compile Include="Parsers\HtmlParser.cs" />
     <Compile Include="Parsers\IParser.cs" />
     <Compile Include="Parsers\RobotsTxtParser.cs" />
     <Compile Include="Parsers\SitemapParser.cs" />
