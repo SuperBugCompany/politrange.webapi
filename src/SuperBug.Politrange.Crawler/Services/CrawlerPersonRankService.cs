@@ -74,11 +74,11 @@ namespace SuperBug.Politrange.Crawler.Services
 
         private void AddOrUpdateRank(IList<PersonPageRank> ranks, Page page, Person person)
         {
-            var rank = ranks.SingleOrDefault(x => x.Person.PersonId == person.PersonId);
+            var rank = ranks.SingleOrDefault(x => x.PersonId == person.PersonId);
 
             if (rank == null)
             {
-                rank = new PersonPageRank() {Page = page, Person = person};
+                rank = new PersonPageRank() {PageId = page.PageId, PersonId = person.PersonId};
                 ranks.Add(rank);
             }
 
