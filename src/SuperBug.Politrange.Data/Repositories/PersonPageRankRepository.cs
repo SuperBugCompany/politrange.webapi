@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Models;
@@ -28,12 +29,10 @@ namespace SuperBug.Politrange.Data.Repositories
                     {
                         var existRank =
                             context.PersonPageRanks.SingleOrDefault(
-                                x => x.Page.PageId == rank.Page.PageId && x.Person.PersonId == rank.Person.PersonId);
+                                x => x.PageId == rank.PageId && x.PersonId == rank.PersonId);
 
                         if (existRank == null)
                         {
-                            context.Pages.Attach(rank.Page);
-                            context.Persons.Attach(rank.Person);
                             context.PersonPageRanks.Add(rank);
                         }
                     }
