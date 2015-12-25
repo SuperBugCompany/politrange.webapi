@@ -9,7 +9,7 @@ using SuperBug.Politrange.Models;
 
 namespace SuperBug.Politrange.Crawler
 {
-    public class CrawlerManage
+    public class CrawlerManage:IDisposable
     {
         private readonly ILogger logger;
         private readonly IStorageService storageService;
@@ -41,16 +41,14 @@ namespace SuperBug.Politrange.Crawler
         {
             if (!isProcessing)
             {
-                isProcessing = true;
-
                 ProcessingCrawler();
-
-                isProcessing = false;
             }
         }
 
         public void ProcessingCrawler()
         {
+            isProcessing = true;
+
             logger.Info("Начата работа краулера");
 
             var container = AutofacContainer.GetContainer();
@@ -107,7 +105,18 @@ namespace SuperBug.Politrange.Crawler
                 }
             }
 
+            isProcessing = false;
+
             logger.Info("Работа краулера завершена");
+        }
+
+        public void Dispose()
+        {
+            if (timer != null)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
         }
     }
 }
