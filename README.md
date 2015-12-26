@@ -14,8 +14,8 @@
 Скачать по ссылке [архивы](https://github.com/SuperBugCompany/politrange.webapi/releases)
 
 Примечание:
-SuperBug.Politrange.Crawler-[version].zip для краулера.
-SuperBug.Politrange.WebApi-[version].zip для веб сервиса.
+* `SuperBug.Politrange.Crawler-[version].zip` для краулера.
+* `SuperBug.Politrange.WebApi-[version].zip` для веб сервиса.
 
 ### Разработка
 1. Клонировать проекта.
