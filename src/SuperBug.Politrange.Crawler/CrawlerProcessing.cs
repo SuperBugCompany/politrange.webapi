@@ -43,10 +43,6 @@ namespace SuperBug.Politrange.Crawler
 
             logger.Info("Download completed" + page.Uri);
 
-            logger.Info("Update current page");
-
-            UpdateLastScanDatePage(downloadPage.Key);
-
             logger.Info("Parse urls by " + page.Uri);
 
             var urls = FetchingUrlsByPage(downloadPage);
@@ -74,6 +70,10 @@ namespace SuperBug.Politrange.Crawler
             countSaved = SavePersonRageRankStorage(personPageRanks);
 
             logger.Info("Saved rank persons: " + countSaved);
+
+            logger.Info("Update current page");
+
+            UpdateLastScanDatePage(currentPage);
         }
 
         private void UpdateLastScanDatePage(Page page)
@@ -106,7 +106,7 @@ namespace SuperBug.Politrange.Crawler
                 var page = new Page()
                 {
                     Uri = url,
-                    Site = site,
+                    SiteId = site.SiteId,
                     FoundDate = DateTime.Now
                 };
 
