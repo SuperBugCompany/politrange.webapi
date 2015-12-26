@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Autofac.Extras.NLog;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Models;
 
@@ -9,6 +10,13 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     public class PageRepository: IPageRepository
     {
+        private readonly ILogger logger;
+
+        public PageRepository(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         public IEnumerable<Page> GetAll()
         {
             using (var context = new PolitrangeContext())
@@ -95,22 +103,29 @@ namespace SuperBug.Politrange.Data.Repositories
             {
                 IEnumerable<Page> pages = entities.Skip(i * size).Take(size);
 
-                using (var context = new PolitrangeContext())
+                try
                 {
-                    context.Sites.Attach(pages.First().Site);
-
-                    foreach (Page page in pages)
+                    using (var context = new PolitrangeContext())
                     {
-                        var existPage = context.Pages.SingleOrDefault(x => x.Uri.Contains(page.Uri));
-
-                        if (existPage == null)
+                        foreach (Page page in pages)
                         {
-                            context.Pages.Add(page);
-                        }
-                    }
+                            var existPage = context.Pages.FirstOrDefault(x => x.Uri.Contains(page.Uri));
 
-                    countSaved += context.SaveChanges();
+                            if (existPage == null)
+                            {
+                                context.Pages.Add(page);
+                            }
+                        }
+
+                        countSaved += context.SaveChanges();
+                    }
                 }
+                catch (Exception exception)
+                {
+                    logger.Error(exception.Message);
+                }
+
+                logger.Info("Saved pages: " + countSaved + " / " + count);
             }
 
             return countSaved;

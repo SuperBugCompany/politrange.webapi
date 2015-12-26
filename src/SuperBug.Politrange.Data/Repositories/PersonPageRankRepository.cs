@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Autofac.Extras.NLog;
 using SuperBug.Politrange.Data.Contexts;
 using SuperBug.Politrange.Models;
 
@@ -9,6 +10,13 @@ namespace SuperBug.Politrange.Data.Repositories
 {
     public class PersonPageRankRepository: IPersonPageRankRepository
     {
+        private readonly ILogger logger;
+
+        public PersonPageRankRepository(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         public int Insert(IEnumerable<PersonPageRank> entities)
         {
             int size = 100;
@@ -23,21 +31,29 @@ namespace SuperBug.Politrange.Data.Repositories
             {
                 IEnumerable<PersonPageRank> ranks = entities.Skip(i * size).Take(size);
 
-                using (var context = new PolitrangeContext())
+                try
                 {
-                    foreach (PersonPageRank rank in ranks)
+                    using (var context = new PolitrangeContext())
                     {
-                        var existRank =
-                            context.PersonPageRanks.SingleOrDefault(
-                                x => x.PageId == rank.PageId && x.PersonId == rank.PersonId);
-
-                        if (existRank == null)
+                        foreach (PersonPageRank rank in ranks)
                         {
-                            context.PersonPageRanks.Add(rank);
+                            var existRank =
+                                context.PersonPageRanks.SingleOrDefault(
+                                    x => x.PageId == rank.PageId && x.PersonId == rank.PersonId);
+
+                            if (existRank == null)
+                            {
+                                context.PersonPageRanks.Add(rank);
+                            }
                         }
+                        countSaved += context.SaveChanges();
                     }
-                    countSaved += context.SaveChanges();
                 }
+                catch (Exception exception)
+                {
+                    logger.Error(exception.Message);
+                }
+
             }
 
             return countSaved;
