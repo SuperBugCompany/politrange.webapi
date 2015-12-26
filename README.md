@@ -15,7 +15,7 @@
 
 Примечание:
 * `SuperBug.Politrange.Crawler-[version].zip` для краулера.
-* `SuperBug.Politrange.WebApi-[version].zip` для веб сервиса.
+* `SuperBug.Politrange.WebApi-[version].zip` для веб-сервиса.
 
 ### Разработка
 1. Клонировать проекта.
