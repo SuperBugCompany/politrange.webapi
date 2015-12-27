@@ -85,7 +85,7 @@ namespace SuperBug.Politrange.Crawler
 
             while (oldPages.Any())
             {
-                var page = newPages.Dequeue();
+                var page = oldPages.Dequeue();
 
                 using (var scope = container.BeginLifetimeScope())
                 {
