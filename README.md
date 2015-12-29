@@ -1,4 +1,5 @@
 ## SuperBug.Politrange.WebApi
+[![GitHub version](https://badge.fury.io/gh/SuperBugCompany%2Fpolitrange.webapi.svg)](https://badge.fury.io/gh/SuperBugCompany%2Fpolitrange.webapi)
 ### Описание проекта.
 Веб-сервис позицируется как Restful Api, обрабатывает запросы http  и возвращает данные в виде Json.
 Краулер позицируется как бота, проверяет в базу данных наличием новых сайтов и старых страниц, которые старше одного дня. Далее разбирает ссылки из страниц и ищет в них наличие ключевых слов личностей.
